@@ -17,6 +17,7 @@
             android:name="com.chuanonly.notes.MainActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="landscape"
+             android:theme="@android:style/Theme.Light.NoTitleBar"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

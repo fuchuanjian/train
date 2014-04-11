@@ -116,7 +116,7 @@ public class GameMain extends DrawableScreen implements GameCore {
 	}
 
 	public final void doButtonPressSound() {
-
+		MainActivity.playSound(MainActivity.SOUND_BUTTON);
 	}
 
 	public void draw(GLEx glex) {
