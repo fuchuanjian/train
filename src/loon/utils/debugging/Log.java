@@ -31,7 +31,6 @@ final public class Log {
 	}
 
 	public static void debugWrite(String text) {
-		android.util.Log.i("debug", text);
 	}
 
 	private static final int MAX_LOG_MESSAGES = 25;

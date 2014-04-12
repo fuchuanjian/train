@@ -1,5 +1,6 @@
 package com.chuanonly.notes;
 
+import java.security.acl.LastOwnerException;
 import java.util.Collections;
 
 import android.content.Intent;
@@ -391,26 +392,37 @@ public class StateGame extends GameState {
 
 	@Override
 	public void tick() {
-		if ((((this.levelNum >= 4) && !this.paused) && ((this.levelStartTicks == -1) && !this.levelEnded))
+		if ((((this.levelNum >= 0) && !this.paused) && ((this.levelStartTicks == -1) && !this.levelEnded))
 				&& (this.levelToEndTicks == -1)) {
-			int num = super.game.getMouseX();
-			int num2 = super.game.getMouseY();
+			int touchX = super.game.getMouseX();
+			int touchY = super.game.getMouseY();
 			int num3 = super.game.getW();
 			int num4 = this.tilew / 10;
 			int num5 = (num3 - (this.pause.getW() / 2)) - num4;
-			boolean flag2 = GameUtils.isInside(num, num2, num5
+			boolean flag2 = GameUtils.isInside(touchX, touchY, num5
 					- (this.btnforward.getWidth() / 2),
 					this.btnforward.getHeight() / 4,
-					this.btnforward.getWidth(), this.btnforward.getHeight())
+					this.btnforward.getWidth()*3, this.btnforward.getHeight()*3)
 					&& super.game.isMouseDown();
 			this.doFastForward(flag2);
 		}
 		this.doTick();
 		if (this.fastForward) {
+			if (hasFast == false && lastFastTime + 3000 <System.currentTimeMillis())
+			{
+				lastFastTime = System.currentTimeMillis();
+				MainActivity.playSound(MainActivity.SOUND_WU);
+			}
 			this.doTick();
+			this.doTick();
+			hasFast = true;
+		}else
+		{
+			hasFast = false;
 		}
 	}
-
+	private boolean hasFast = false;
+	private long lastFastTime = 0;
 	private void tickAmbience() {
 		if (this.ambienceVolume != this.ambienceVolumeTarget) {
 			float num = 0.005f;
@@ -1825,7 +1837,7 @@ public class StateGame extends GameState {
 					super.game.doButtonPressSound();
 				}
 				//是否显示快进
-				if (this.levelNum >= 4) {
+				if (this.levelNum >= 0) {
 					this.btnforward.Paint(painter, (float) num111,
 							(float) ((this.btnforward.getHeight() * 3) / 4),
 							this.fastForward ? 1 : 0);

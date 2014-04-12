@@ -132,7 +132,6 @@ public abstract class LGame extends Activity {
 		Runnable runnable = new Runnable() {
 			@Override
 			public void run() {
-				Log.i("Android2DActivity", "LGame 2D Engine Start");
 				LSystem.screenActivity = LGame.this;
 				LGame.this.frameLayout =  new FrameLayout(LGame.this);
 				_bottomLayout = new LinearLayout(LGame.this);
@@ -468,8 +467,6 @@ public abstract class LGame extends Activity {
 						.show();
 			}
 		} catch (Exception e) {
-			Log.w("Android2DView",
-					"Cannot access game AndroidManifest.xml file !");
 		}
 	}
 
@@ -776,7 +773,6 @@ public abstract class LGame extends Activity {
 			super.onDestroy();
 			// 当此项为True时，强制关闭整个程序
 			if (isDestroy) {
-				Log.i("Android2DActivity", "LGame 2D Engine Shutdown");
 				android.os.Process.killProcess(android.os.Process.myPid());
 			}
 		} catch (Exception e) {

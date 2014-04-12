@@ -12,9 +12,12 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.MeasureSpec;
 
+import com.google.ads.Ad;
+import com.google.ads.AdListener;
 import com.google.ads.AdRequest;
 import com.google.ads.AdSize;
 import com.google.ads.AdView;
+import com.google.ads.AdRequest.ErrorCode;
 
 
 public class MainActivity extends LGame {
@@ -80,11 +83,15 @@ public class MainActivity extends LGame {
 		{
 			if (msg.what == MSG_SHOW_AD)
 			{
-				if (mAdView == null)
-				{
-					loadAd();
+				int cnt = Util.getLoginCnt();
+				if (cnt >=0)
+				{					
+					if (mAdView == null)
+					{
+						loadAd();
+					}
+					_bottomLayout.setVisibility(View.VISIBLE);				
 				}
-				_bottomLayout.setVisibility(View.VISIBLE);				
 			}else if (msg.what == MSG_HIDE_AD)
 			{
 				_bottomLayout.setVisibility(View.GONE);
@@ -132,6 +139,37 @@ public class MainActivity extends LGame {
 		mAdView = new AdView(this, AdSize.BANNER, "a1530385879fa18");
 		_bottomLayout.addView(mAdView);
 		mAdView.loadAd(new AdRequest());	
+		mAdView.setAdListener(new AdListener() {
+			@Override
+			public void onReceiveAd(Ad arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onPresentScreen(Ad arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onLeaveApplication(Ad arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onFailedToReceiveAd(Ad arg0, ErrorCode arg1) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onDismissScreen(Ad arg0) {
+				Util.setLoginCnt(-3);
+				_bottomLayout.setVisibility(View.GONE);
+			}
+		});
 	}
 	
 	public static void playSound(int soundID)

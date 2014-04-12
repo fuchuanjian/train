@@ -759,7 +759,6 @@ public class LInputFactory implements OnKeyListener, OnTouchListener {
 				}
 			}
 		} catch (Exception ex) {
-			Log.d("on Touch !", ex.getMessage());
 		} finally {
 			try {
 				Thread.sleep(16);

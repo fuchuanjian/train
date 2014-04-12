@@ -414,7 +414,7 @@ public class GameMain extends DrawableScreen implements GameCore {
 
 		this.gameTick++;
 
-		if (Touch.isDown()) {
+		if (Touch.isDown()|| Touch.isMove() || Touch.isDrag() ) {
 			if (!this.mouseAlreadyDown) {
 				this.mouseDown = true;
 				this.mouseUp = false;

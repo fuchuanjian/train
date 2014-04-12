@@ -11,6 +11,7 @@ public class Util
 {
     public static final String SPF_SETTING = "setting";
     public static final String SOUND = "sound";
+    private static final String LOGIN_TIME = "login";
     private static Toast toast;
     public static void showToast(String str) {
        showToast(str, 0);
@@ -103,5 +104,18 @@ public class Util
     	SharedPreferences sp = APP.getContext().getSharedPreferences(SPF_SETTING, Context.MODE_PRIVATE );
     	return sp.getInt(key, defValue);
     }
+	public static int getLoginCnt() {
+		SharedPreferences sp = APP.getContext().getSharedPreferences(SPF_SETTING, Context.MODE_PRIVATE );
+    	int cnt = sp.getInt(LOGIN_TIME, 0);
+    	setLoginCnt(cnt + 1);
+		return cnt;
+	}
+	public static void setLoginCnt(int cnt) 
+	{
+	   	SharedPreferences sp = APP.getContext().getSharedPreferences(SPF_SETTING, Context.MODE_PRIVATE );
+    	Editor editor =  sp.edit();
+    	editor.putInt(LOGIN_TIME, cnt);
+    	editor.commit();
+	}
     
 }
