@@ -368,6 +368,7 @@ public class Tile {
 
 	public final int rotate() {
 		if (!this.locked) {
+			MainActivity.playSound(MainActivity.SOUND_CLICK);
 			ETileTypes type = this.type;
 			switch (this.type) {
 			case ETileLeftRight:

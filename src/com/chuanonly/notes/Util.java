@@ -10,6 +10,7 @@ import android.widget.Toast;
 public class Util
 {
     public static final String SPF_SETTING = "setting";
+    public static final String SOUND = "sound";
     private static Toast toast;
     public static void showToast(String str) {
        showToast(str, 0);
@@ -53,10 +54,24 @@ public class Util
         }
     }
     
+    public static void setSoundSettingON(boolean isSoundON)
+    {
+    	boolean soundBool = isSoundSettingOn();
+    	if (soundBool == isSoundON ) return;
+    	SharedPreferences sp = APP.getContext().getSharedPreferences(SPF_SETTING, Context.MODE_PRIVATE );
+    	Editor editor =  sp.edit();
+    	editor.putBoolean(SOUND, isSoundON);
+    	editor.commit();
+    }
+    public static boolean isSoundSettingOn()
+    {
+    	SharedPreferences sp = APP.getContext().getSharedPreferences(SPF_SETTING, Context.MODE_PRIVATE );
+    	return sp.getBoolean(SOUND, true);
+    }
     
     public static void setStringToSharedPref(String key, String value)
     {
-    	SharedPreferences sp = APP.getContext().getSharedPreferences(SPF_SETTING, Context.MODE_MULTI_PROCESS );
+    	SharedPreferences sp = APP.getContext().getSharedPreferences(SPF_SETTING, Context.MODE_PRIVATE );
     	Editor editor =  sp.edit();
     	editor.putString(key, value);
     	editor.commit();
@@ -65,14 +80,14 @@ public class Util
     
     public static void setIntToSharedPref(String key, int value)
     {
-    	SharedPreferences sp = APP.getContext().getSharedPreferences(SPF_SETTING, Context.MODE_MULTI_PROCESS );
+    	SharedPreferences sp = APP.getContext().getSharedPreferences(SPF_SETTING, Context.MODE_PRIVATE );
     	Editor editor =  sp.edit();
     	editor.putInt(key, value);
     	editor.commit();
     }
     public static void setLongToSharedPref(String key, long value)
     {
-    	SharedPreferences sp = APP.getContext().getSharedPreferences(SPF_SETTING, Context.MODE_MULTI_PROCESS );
+    	SharedPreferences sp = APP.getContext().getSharedPreferences(SPF_SETTING, Context.MODE_PRIVATE );
     	Editor editor =  sp.edit();
     	editor.putLong(key, value);
     	editor.commit();
@@ -80,12 +95,12 @@ public class Util
     
     public static String getStringFromSharedPref(String key, String defValue)
     {
-    	SharedPreferences sp = APP.getContext().getSharedPreferences(SPF_SETTING, Context.MODE_MULTI_PROCESS );
+    	SharedPreferences sp = APP.getContext().getSharedPreferences(SPF_SETTING, Context.MODE_PRIVATE );
     	return sp.getString(key, defValue);
     }
     public static int getIntFromSharedPref(String key, int defValue)
     {
-    	SharedPreferences sp = APP.getContext().getSharedPreferences(SPF_SETTING, Context.MODE_MULTI_PROCESS );
+    	SharedPreferences sp = APP.getContext().getSharedPreferences(SPF_SETTING, Context.MODE_PRIVATE );
     	return sp.getInt(key, defValue);
     }
     

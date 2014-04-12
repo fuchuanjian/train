@@ -30,8 +30,13 @@ public class MainActivity extends LGame {
 	public static final int MUSIC_START = 3;
 	public static final int MUSIC_STOP = 4;
 	
+	//soundid
 	public static final int SOUND_BUTTON = 0;
-	
+	public static final int SOUND_WU = 1;
+	public static final int SOUND_SUCEESS = 2;
+	public static final int SOUND_CRASH = 3;
+	public static final int SOUND_DANGDANG = 4;
+	public static final int SOUND_CLICK = 5;
 	
 	@Override
 	public void onGamePaused() {
@@ -63,6 +68,11 @@ public class MainActivity extends LGame {
 		 mSoundPlay = new SoundPlayHelper();
 	     mSoundPlay.initSounds(this);
 	     mSoundPlay.loadSfx(this, R.raw.button, SOUND_BUTTON);
+	     mSoundPlay.loadSfx(this, R.raw.wu, SOUND_WU);
+	     mSoundPlay.loadSfx(this, R.raw.dangdang, SOUND_DANGDANG);
+	     mSoundPlay.loadSfx(this, R.raw.burst, SOUND_CRASH);
+	     mSoundPlay.loadSfx(this, R.raw.win, SOUND_SUCEESS);
+	     mSoundPlay.loadSfx(this, R.raw.click, SOUND_CLICK);
 	}
 	private Handler mHandler = new Handler()
 	{
@@ -84,9 +94,13 @@ public class MainActivity extends LGame {
 				mSoundPlay.play(soundId, 0);
 			}else if (msg.what == MUSIC_START)
 			{
-				mSoundPlay.playBGMusic();
+				if (Util.isSoundSettingOn())
+				{					
+					mSoundPlay.playBGMusic();
+				}
 			}else if (msg.what == MUSIC_STOP)
 			{
+				mHandler.removeMessages(MUSIC_START);
 				mSoundPlay.stopBGMusic();
 			}
 		};
@@ -122,13 +136,16 @@ public class MainActivity extends LGame {
 	
 	public static void playSound(int soundID)
 	{
-		Handler h =  mHandlerRef.get();
-		if (h != null)
-		{
-			Message msg = h.obtainMessage();
-			msg.what = MSG_SOUND;
-			msg.arg1 = soundID;
-			msg.sendToTarget();
+		if (Util.isSoundSettingOn())
+		{			
+			Handler h =  mHandlerRef.get();
+			if (h != null)
+			{
+				Message msg = h.obtainMessage();
+				msg.what = MSG_SOUND;
+				msg.arg1 = soundID;
+				msg.sendToTarget();
+			}
 		}
 	}
 	@Override
