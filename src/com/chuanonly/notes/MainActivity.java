@@ -1,3 +1,4 @@
+
 package com.chuanonly.notes;
 
 import java.lang.ref.WeakReference;
@@ -25,15 +26,21 @@ public class MainActivity extends LGame {
 	public static final int MSG_HIDE_AD = 1;
 	public static final int MSG_SOUND = 2;
 	
+	
+	public static final int MUSIC_START = 3;
+	public static final int MUSIC_STOP = 4;
+	
 	public static final int SOUND_BUTTON = 0;
+	
+	
 	@Override
 	public void onGamePaused() {
-
+		mHandler.sendEmptyMessage(MUSIC_STOP);
 	}
 
 	@Override
 	public void onGameResumed() {
-
+		mHandler.sendEmptyMessageDelayed(MUSIC_START, 1500);
 	}
 
 	@Override
@@ -75,6 +82,12 @@ public class MainActivity extends LGame {
 			{
 				int soundId = msg.arg1;
 				mSoundPlay.play(soundId, 0);
+			}else if (msg.what == MUSIC_START)
+			{
+				mSoundPlay.playBGMusic();
+			}else if (msg.what == MUSIC_STOP)
+			{
+				mSoundPlay.stopBGMusic();
 			}
 		};
 	};
@@ -123,5 +136,14 @@ public class MainActivity extends LGame {
 	{
 		mSoundPlay.release();
 		super.onDestroy();
+	}
+	
+	public static void handlerMessage(int mgsWhat)
+	{
+		Handler h =  mHandlerRef.get();
+		if (h != null)
+		{
+			h.sendEmptyMessage(mgsWhat);
+		}
 	}
 }
