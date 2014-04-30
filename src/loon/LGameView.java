@@ -123,7 +123,7 @@ public final class LGameView extends CallQueue implements Renderer {
 		LSystem.screenActivity = activity;
 		LSystem.global_queue = this;
 		this.context = activity.getApplicationContext();
-		this.setFullScreen(fullScreen);
+//		this.setFullScreen(fullScreen);
 		this.setLandscape(landscape, mode);
 		LSystem.screenActivity.checkConfigChanges(context);
 	}
