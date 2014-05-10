@@ -22,33 +22,12 @@ import loon.utils.MathUtils;
 import loon.utils.StringUtils;
 import loon.utils.collection.ArrayMap;
 
-/**
- * Copyright 2008 - 2010
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
- * 
- * http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
- * the License.
- * 
- * @project loon
- * @author cping
- * @email javachenpeng@yahoo.com
- * @version 0.1.2
- */
+
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class Command extends Conversion implements Serializable, LRelease {
 
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 
 	// 脚本缓存
@@ -126,31 +105,19 @@ public class Command extends Conversion implements Serializable, LRelease {
 	// 脚本名
 	private String scriptName;
 
-	/**
-	 * 构造函数，载入指定脚本文件
-	 * 
-	 * @param fileName
-	 */
+	
 	public Command(String fileName) {
 		createCache(false);
 		formatCommand(fileName);
 	}
 
-	/**
-	 * 构造函数，载入指定脚本文件
-	 * 
-	 * @param in
-	 */
+	
 	public Command(InputStream in) {
 		createCache(false);
 		formatCommand(in);
 	}
 
-	/**
-	 * 构造函数，载入指定list脚本
-	 * 
-	 * @param resource
-	 */
+	
 	public Command(String fileName, String[] res) {
 		createCache(false);
 		formatCommand("function", res);
@@ -336,35 +303,22 @@ public class Command extends Conversion implements Serializable, LRelease {
 		return result;
 	}
 
-	/**
-	 * 打开脚本缓存
-	 * 
-	 */
+	
 	public void openCache() {
 		isCache = true;
 	}
 
-	/**
-	 * 关闭脚本缓存
-	 * 
-	 */
+	
 	public void closeCache() {
 		isCache = false;
 	}
 
-	/**
-	 * 当前脚本行缓存名
-	 * 
-	 * @return
-	 */
+	
 	public String nowCacheOffsetName(String cmd) {
 		return (scriptName + FLAG + offsetPos + FLAG + cmd).toLowerCase();
 	}
 
-	/**
-	 * 重启脚本缓存
-	 * 
-	 */
+	
 	public static void resetCache() {
 		if (scriptContext != null) {
 			scriptContext.clear();
@@ -379,23 +333,14 @@ public class Command extends Conversion implements Serializable, LRelease {
 		this.isRead = isRead;
 	}
 
-	/**
-	 * 返回当前的读入数据集合
-	 * 
-	 * @return
-	 */
+	
 	public synchronized String[] getReads() {
 		String result = readBuffer.toString();
 		result = result.replaceAll(SELECTS_TAG, "");
 		return StringUtils.split(result, FLAG);
 	}
 
-	/**
-	 * 返回指定索引的读入数据
-	 * 
-	 * @param index
-	 * @return
-	 */
+	
 	public synchronized String getRead(int index) {
 		try {
 			return getReads()[index];
@@ -404,14 +349,7 @@ public class Command extends Conversion implements Serializable, LRelease {
 		}
 	}
 
-	/**
-	 * 截取第一次出现的指定标记
-	 * 
-	 * @param messages
-	 * @param startString
-	 * @param endString
-	 * @return
-	 */
+	
 	public static String getNameTag(String messages, String startString,
 			String endString) {
 		List results = getNameTags(messages, startString, endString);
@@ -419,28 +357,14 @@ public class Command extends Conversion implements Serializable, LRelease {
 				: (String) results.get(0);
 	}
 
-	/**
-	 * 截取指定标记内容为list
-	 * 
-	 * @param messages
-	 * @param startString
-	 * @param endString
-	 * @return
-	 */
+	
 	public static List getNameTags(String messages, String startString,
 			String endString) {
 		return Command.getNameTags(messages.toCharArray(),
 				startString.toCharArray(), endString.toCharArray());
 	}
 
-	/**
-	 * 截取指定标记内容为list
-	 * 
-	 * @param messages
-	 * @param startString
-	 * @param endString
-	 * @return
-	 */
+	
 	public static List getNameTags(char[] messages, char[] startString,
 			char[] endString) {
 		int dlength = messages.length;
@@ -480,11 +404,7 @@ public class Command extends Conversion implements Serializable, LRelease {
 		return tagList;
 	}
 
-	/**
-	 * 注入选择变量
-	 * 
-	 * @param type
-	 */
+	
 	public void select(int type) {
 		if (innerCommand != null) {
 			innerCommand.setVariable(V_SELECT_KEY, String.valueOf(type));
@@ -496,30 +416,17 @@ public class Command extends Conversion implements Serializable, LRelease {
 		return (String) getVariable(V_SELECT_KEY);
 	}
 
-	/**
-	 * 插入变量
-	 * 
-	 * @param key
-	 * @param value
-	 */
+	
 	public void setVariable(String key, Object value) {
 		setEnvironmentList.put(key, value);
 	}
 
-	/**
-	 * 插入变量集合
-	 * 
-	 * @param vars
-	 */
+	
 	public void setVariables(HashMap vars) {
 		setEnvironmentList.putAll(vars);
 	}
 
-	/**
-	 * 返回变量集合
-	 * 
-	 * @return
-	 */
+	
 	public HashMap getVariables() {
 		return setEnvironmentList;
 	}
@@ -528,30 +435,17 @@ public class Command extends Conversion implements Serializable, LRelease {
 		return setEnvironmentList.get(key);
 	}
 
-	/**
-	 * 删除变量
-	 * 
-	 * @param key
-	 */
+	
 	public void removeVariable(String key) {
 		setEnvironmentList.remove(key);
 	}
 
-	/**
-	 * 判定脚本是否允许继续解析
-	 * 
-	 * @return
-	 */
+	
 	public boolean next() {
 		return (offsetPos < scriptSize);
 	}
 
-	/**
-	 * 跳转向指定索引位置
-	 * 
-	 * @param offset
-	 * @return
-	 */
+	
 	public boolean gotoIndex(final int offset) {
 		boolean result = offset < scriptSize && offset > 0
 				&& offset != offsetPos;
@@ -565,11 +459,7 @@ public class Command extends Conversion implements Serializable, LRelease {
 		return offsetPos;
 	}
 
-	/**
-	 * 批处理执行脚本，并返回可用list结果
-	 * 
-	 * @return
-	 */
+	
 	public List batchToList() {
 		List reslist = new ArrayList(scriptSize);
 		for (; next();) {
@@ -581,11 +471,7 @@ public class Command extends Conversion implements Serializable, LRelease {
 		return reslist;
 	}
 
-	/**
-	 * 批处理执行脚本，并返回可用string结果
-	 * 
-	 * @return
-	 */
+	
 	public String batchToString() {
 		StringBuffer resString = new StringBuffer(scriptSize * 10);
 		for (; next();) {
@@ -643,10 +529,7 @@ public class Command extends Conversion implements Serializable, LRelease {
 
 	}
 
-	/**
-	 * 随机数处理
-	 * 
-	 */
+	
 	private void setupRandom(String cmd) {
 		// 随机数判定
 		if (cmd.indexOf(RAND_TAG) != -1) {
@@ -694,11 +577,7 @@ public class Command extends Conversion implements Serializable, LRelease {
 		innerCommand = null;
 	}
 
-	/**
-	 * 逐行执行脚本命令
-	 * 
-	 * @return
-	 */
+	
 	public synchronized String doExecute() {
 		if (isClose) {
 			return null;
@@ -991,12 +870,7 @@ public class Command extends Conversion implements Serializable, LRelease {
 		return executeCommand;
 	}
 
-	/**
-	 * 获得脚本保存用名
-	 * 
-	 * @param name
-	 * @return
-	 */
+	
 	public final String getSaveName(final String name) {
 		String newName = scriptName + "_" + name;
 		newName = StringUtils.replaceIgnoreCase(newName, "/", "$");
@@ -1004,12 +878,7 @@ public class Command extends Conversion implements Serializable, LRelease {
 		return newName;
 	}
 
-	/**
-	 * 保存游戏脚本数据(请注意，此处仅仅保存了脚本数据，并不主动为具体游戏保存任何额外的参数)
-	 * 
-	 * @param name
-	 * @param other
-	 */
+	
 	public final void saveCommand(String name, HashMap<String, String> other) {
 		isRead = false;
 		addCommand = false;
@@ -1046,11 +915,7 @@ public class Command extends Conversion implements Serializable, LRelease {
 		session.save();
 	}
 
-	/**
-	 * 加载指定名称的脚本数据
-	 * 
-	 * @param name
-	 */
+	
 	public final void loadCommand(String name) {
 		loadCommand(name, -1);
 	}
@@ -1059,14 +924,7 @@ public class Command extends Conversion implements Serializable, LRelease {
 		loadCommand(name, line, null);
 	}
 
-	/**
-	 * 加载指定名称的脚本数据，并跳向指定行(请注意，此处仅仅还原了脚本数据，并不主动为具体游戏恢复任何额外的参数)
-	 * 
-	 * @param name
-	 * @param line
-	 * @param other
-	 * @return
-	 */
+	
 	public final HashMap loadCommand(String name, int line, List<String> other) {
 		isRead = false;
 		addCommand = false;
@@ -1110,12 +968,7 @@ public class Command extends Conversion implements Serializable, LRelease {
 		return null;
 	}
 
-	/**
-	 * 载入其它脚本
-	 * 
-	 * @param cmd
-	 * @return
-	 */
+	
 	private final boolean includeCommand(String cmd) {
 		temps = commandSplit(cmd);
 		StringBuffer sbr = new StringBuffer();
@@ -1131,12 +984,7 @@ public class Command extends Conversion implements Serializable, LRelease {
 		return false;
 	}
 
-	/**
-	 * 包含指定脚本内容
-	 * 
-	 * @param fileName
-	 * @return
-	 */
+	
 	public final static String[] includeFile(String fileName) {
 		if (scriptLazy == null) {
 			scriptLazy = new HashMap(100);
@@ -1198,12 +1046,7 @@ public class Command extends Conversion implements Serializable, LRelease {
 
 	}
 
-	/**
-	 * 获得指定脚本内容
-	 * 
-	 * @param in
-	 * @return
-	 */
+	
 	public final static String[] includeFile(InputStream in) {
 		if (scriptLazy == null) {
 			scriptLazy = new HashMap(100);
@@ -1263,22 +1106,14 @@ public class Command extends Conversion implements Serializable, LRelease {
 		}
 	}
 
-	/**
-	 * 过滤指定脚本文件内容为list
-	 * 
-	 * @param src
-	 * @return
-	 */
+	
 	public static List commandSplit(final String src) {
 		String result = updateOperator(src);
 		String[] cmds = result.split(FLAG);
 		return Arrays.asList(cmds);
 	}
 
-	/**
-	 * 释放并清空全部缓存资源
-	 * 
-	 */
+	
 	public final static void releaseCache() {
 		if (setEnvironmentList != null) {
 			setEnvironmentList.clear();
