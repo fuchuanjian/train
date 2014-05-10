@@ -1,5 +1,6 @@
 package com.chuanonly.notes;
 
+import java.security.acl.LastOwnerException;
 import java.util.Collections;
 
 import android.content.Intent;
@@ -312,6 +313,7 @@ public class StateGame extends GameState {
 	private void pauseGame() {
 		this.pauseGame(false);
 		MainActivity.showAd();
+		MainActivity.handlerMessage(MainActivity.MUSIC_STOP);
 	}
 
 	private void pauseGame(boolean instant) {
@@ -390,26 +392,37 @@ public class StateGame extends GameState {
 
 	@Override
 	public void tick() {
-		if ((((this.levelNum >= 4) && !this.paused) && ((this.levelStartTicks == -1) && !this.levelEnded))
+		if ((((this.levelNum >= 0) && !this.paused) && ((this.levelStartTicks == -1) && !this.levelEnded))
 				&& (this.levelToEndTicks == -1)) {
-			int num = super.game.getMouseX();
-			int num2 = super.game.getMouseY();
+			int touchX = super.game.getMouseX();
+			int touchY = super.game.getMouseY();
 			int num3 = super.game.getW();
 			int num4 = this.tilew / 10;
 			int num5 = (num3 - (this.pause.getW() / 2)) - num4;
-			boolean flag2 = GameUtils.isInside(num, num2, num5
+			boolean flag2 = GameUtils.isInside(touchX, touchY, num5
 					- (this.btnforward.getWidth() / 2),
 					this.btnforward.getHeight() / 4,
-					this.btnforward.getWidth(), this.btnforward.getHeight())
+					this.btnforward.getWidth()*3, this.btnforward.getHeight()*3)
 					&& super.game.isMouseDown();
 			this.doFastForward(flag2);
 		}
 		this.doTick();
 		if (this.fastForward) {
+			if (hasFast == false && lastFastTime + 3000 <System.currentTimeMillis())
+			{
+				lastFastTime = System.currentTimeMillis();
+				MainActivity.playSound(MainActivity.SOUND_WU);
+			}
 			this.doTick();
+			this.doTick();
+			hasFast = true;
+		}else
+		{
+			hasFast = false;
 		}
 	}
-
+	private boolean hasFast = false;
+	private long lastFastTime = 0;
 	private void tickAmbience() {
 		if (this.ambienceVolume != this.ambienceVolumeTarget) {
 			float num = 0.005f;
@@ -443,6 +456,7 @@ public class StateGame extends GameState {
 			}
 			this.levelToEndTicks = 50;
 			this.success = false;
+			MainActivity.playSound(MainActivity.SOUND_CRASH);
 		}
 	}
 
@@ -461,7 +475,7 @@ public class StateGame extends GameState {
 			flag = false;
 			this.skipLevel = false;
 		}
-		//成功
+		//成功 是否成功 只判断一次
 		if (!flag) {
 			this.doFastForward(false);
 
@@ -481,6 +495,7 @@ public class StateGame extends GameState {
 //			super.game.getSettings().m_levels.set(curLevel - 1, 1);
 			super.game.getSettings().Save();
 			super.game.getSettings().saveSuccessLevel(curLevel-1);
+			MainActivity.playSound(MainActivity.SOUND_SUCEESS);
 			if (((super.game.getSettings().m_levels.get(14) > 0) && (super.game
 					.getSettings().m_levels.get(0x1d) > 0))
 					&& (super.game.getSettings().m_levels.get(0x2c) > 0)) {
@@ -497,6 +512,7 @@ public class StateGame extends GameState {
 		this.updateTrainVolume();
 		this.startAmbience(false);
 		MainActivity.hideAd();
+		MainActivity.handlerMessage(MainActivity.MUSIC_START);
 	}
 
 	private void updateCaveData() {
@@ -885,8 +901,8 @@ public class StateGame extends GameState {
 	}
 
 	private void doTick() {
-		int num = super.game.getMouseX();
-		int num2 = super.game.getMouseY();
+		int touchX = super.game.getMouseX();
+		int touchY = super.game.getMouseY();
 		this.tickAmbience();
 		if (this.levelStartTicks != -1) {
 			if ((super.game.isMouseDown() || this.shouldDoPauseAfterLevelStart)
@@ -972,14 +988,14 @@ public class StateGame extends GameState {
 				int num6 = super.game.getValue(EValues.EValueSelectedLevel);
 				if ((super.game.isMouseDown() && (super.game.getMouseDownTick() == super.game
 						.getTick())) && (this.levelToEndTicks == -1)) {
-					boolean flag2 = false;
+					boolean isBeTouch = false;
 					int num7 = 0;
 					for (int i = 0; i < this.LEVEL_TILES_ROWS; i++) {
-						for (int j = 0; (j < this.LEVEL_TILES_COLS) && !flag2; j++) {
+						for (int j = 0; (j < this.LEVEL_TILES_COLS) && !isBeTouch; j++) {
 							Tile tile = this.tiles.get(num7);
-							if (((num > tile.x) && (num < (tile.x + this.tilew)))
-									&& ((num2 > tile.y) && (num2 < (tile.y + this.tileh)))) {
-								flag2 = true;
+							if (((touchX > tile.x) && (touchX < (tile.x + this.tilew)))
+									&& ((touchY > tile.y) && (touchY < (tile.y + this.tileh)))) {
+								isBeTouch = true;
 								if (num6 == 1) {
 									if (((this.tutorialPhase == 0) && (j == 3))
 											&& (i == 3)) {
@@ -1011,6 +1027,7 @@ public class StateGame extends GameState {
 						if (item.ticks == this.gametick) {
 							
 							this.createTrain(this.caves.get(item.caveid));
+							MainActivity.playSound(MainActivity.SOUND_DANGDANG);
 						} else if (item.ticks == (this.gametick + 60)) {
 							this.caveActive.set(item.caveid, this.gametick);
 							
@@ -1820,7 +1837,7 @@ public class StateGame extends GameState {
 					super.game.doButtonPressSound();
 				}
 				//是否显示快进
-				if (this.levelNum >= 4) {
+				if (this.levelNum >= 0) {
 					this.btnforward.Paint(painter, (float) num111,
 							(float) ((this.btnforward.getHeight() * 3) / 4),
 							this.fastForward ? 1 : 0);

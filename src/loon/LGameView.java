@@ -103,7 +103,7 @@ public final class LGameView extends CallQueue implements Renderer {
 		LSystem.screenActivity = activity;
 		LSystem.global_queue = this;
 		this.context = activity.getApplicationContext();
-		this.setFullScreen(fullScreen);
+//		this.setFullScreen(fullScreen);
 		this.setLandscape(landscape, mode);
 		LSystem.screenActivity.checkConfigChanges(context);
 	}
@@ -241,7 +241,6 @@ public final class LGameView extends CallQueue implements Renderer {
 			sbr.append("\nMaxWidth:").append(maxWidth)
 					.append(",MaxHeight:" + maxHeight);
 			sbr.append("\nScale:").append(isScale());
-			Log.i("Android2DSize", sbr.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -376,7 +375,6 @@ public final class LGameView extends CallQueue implements Renderer {
 		}
 
 		if (onResume) {
-			Log.i("Android2DView", "onResume");
 			timer = LSystem.getSystemTimer();
 			lastTimeMicros = timer.getTimeMicros();
 			elapsedTime = 0;
@@ -503,13 +501,11 @@ public final class LGameView extends CallQueue implements Renderer {
 		}
 
 		if (onPause) {
-			Log.i("Android2DView", "onPause");
 			pause(500);
 			process.onPause();
 		}
 
 		if (onDestroy) {
-			Log.i("Android2DView", "onDestroy");
 			if (process != null) {
 				process.end();
 			}
@@ -548,7 +544,6 @@ public final class LGameView extends CallQueue implements Renderer {
 	@Override
 	public void onSurfaceChanged(GL10 gl10, int width, int height) {
 		if (gl != null) {
-			Log.i("Android2DView", "onSurfaceChangedUpdate");
 			this.width = width;
 			this.height = height;
 			gl.setViewPort(0, 0, width, height);
@@ -556,7 +551,6 @@ public final class LGameView extends CallQueue implements Renderer {
 				process.resize(width, height);
 			}
 		} else if (gl == null || !gl.equals(gl10, width, height)) {
-			Log.i("Android2DView", "onSurfaceChangedCreate");
 			createGL(gl10);
 		}
 	}
@@ -568,7 +562,6 @@ public final class LGameView extends CallQueue implements Renderer {
 
 	private void createGL(GL10 gl10) {
 		if (gl == null || !gl.equals(gl10, width, height)) {
-			Log.i("Android2DView", "onSurfaceCreated");
 			this.gl = new GLEx(gl10, LSystem.screenRect.width,
 					LSystem.screenRect.height);
 			this.supportVBO = GLEx.checkVBO();

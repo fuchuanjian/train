@@ -48,7 +48,7 @@ public class StateSplash extends GameState
 		{
 			super.game.loadAllStates();
 		}
-		if (this.ticks > 30)
+		if (this.ticks > 20)
 		{
 			super.game.changeState(EStates.EGameStateMainMenu);
 		}

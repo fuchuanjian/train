@@ -1,9 +1,13 @@
 package com.chuanonly.notes;
+import java.io.IOException;
 import java.util.HashMap;
 
 import android.content.Context;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.media.SoundPool;
+import android.provider.MediaStore.Audio.Media;
+import android.util.Log;
 
 public class SoundPlayHelper {
 
@@ -12,7 +16,7 @@ public class SoundPlayHelper {
 
 	// 定义SoundPool 对象
 	private SoundPool soundPool;
-
+	private MediaPlayer mMediaPlayer;
 	// 定义HASH表
 	private HashMap<Integer, Integer> soundPoolMap;
 
@@ -28,6 +32,8 @@ public class SoundPlayHelper {
 		AudioManager mgr = (AudioManager) context
 				.getSystemService(Context.AUDIO_SERVICE);
 		streamVolume = mgr.getStreamVolume(AudioManager.STREAM_MUSIC);
+		mMediaPlayer = MediaPlayer.create(context, R.raw.bgm);
+		mMediaPlayer.setLooping(true);
 	}
 
 	
@@ -44,6 +50,23 @@ public class SoundPlayHelper {
 	{
 		soundPool.release();
 		soundPool = null;
+		mMediaPlayer.stop();
+		mMediaPlayer.release();
+		mMediaPlayer = null;
+	}
+
+	public void playBGMusic() {
+		if (!mMediaPlayer.isPlaying())
+		{			
+			mMediaPlayer.start();
+		}
+	}
+
+	public void stopBGMusic() {
+		if (mMediaPlayer.isPlaying())
+		{			
+			mMediaPlayer.pause();
+		}
 	}
 }
 

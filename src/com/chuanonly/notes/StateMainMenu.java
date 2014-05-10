@@ -185,6 +185,7 @@ public class StateMainMenu extends GameState
 	
 			}
 			super.game.getSettings().Save();
+			super.game.getSettings().saveSoundsetting(flag);
 		}
 		if (this.mainmenu_play.paint(painter, super.game, num / 2, y) && (this.exitTicks == -1))
 		{

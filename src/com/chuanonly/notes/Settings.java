@@ -18,6 +18,7 @@ public class Settings
         	  int levelSuccessCnt = Util.getIntFromSharedPref(LEVEL+i, -1);
               this.m_levels.add(levelSuccessCnt);
           }
+          m_sounds = Util.isSoundSettingOn();
 	}
 
 	public final void Save()
@@ -42,5 +43,16 @@ public class Settings
 			this.m_levels.set(i, levelSuccessCnt);
 		}
 		this.Save();
+	}
+
+	public void saveSoundsetting(boolean isSoundOn) {
+		Util.setSoundSettingON(isSoundOn);
+		if (isSoundOn)
+		{			
+			MainActivity.handlerMessage(MainActivity.MUSIC_START);
+		}else
+		{
+			MainActivity.handlerMessage(MainActivity.MUSIC_STOP);
+		}
 	}
 }
