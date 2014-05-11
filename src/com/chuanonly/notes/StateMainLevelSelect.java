@@ -75,6 +75,9 @@ public class StateMainLevelSelect extends GameState
 		}
 	}
 
+	private float scaleNormal = 0.65f; //0.8f
+	private float scaleMove = 0.7f; //0.95f
+	private float scaleOpacity = 0.6f; //0.7f
 	@Override
 	public void paint(Painter painter)
 	{
@@ -86,9 +89,9 @@ public class StateMainLevelSelect extends GameState
 		}
 		int num4 = this.levelSelect.getWidth();
 		int num5 = this.levelSelect.getHeight();
-		int num6 = (num4 * 80) / 100;
-		int num7 = (num5 * 80) / 100;
-		int num8 = (w - (3 * num4)) / 4;
+		int num6 = (int) (num4 * scaleNormal);
+		int num7 = (int) (num5 * scaleNormal);
+		int num8 = (w - (4 * num6)) / 5; //每块直接间隔
 		int num9 = 10;
 		int ribbonY = (-num5 / 2) + 15;
 		int num11 = num8;
@@ -96,7 +99,7 @@ public class StateMainLevelSelect extends GameState
 		int num13 = -30;
 		boolean flag = this.animticks != -1;
 		float x = 1f;
-		int num15 = num11 + (num4 / 2);
+		int num15 = num11 + (num6 / 2);
 		int num16 = num9 + (num5 / 2);
 		painter.save();
 		painter.translate((float) num15, (float) num16);
@@ -105,11 +108,11 @@ public class StateMainLevelSelect extends GameState
 		boolean flag4 = (!flag && flag2) && super.game.isMouseUp();
 		if (flag4 || flag3)
 		{
-			x = 0.8f;
+			x = scaleNormal;
 		}
 		else
 		{
-			x = 0.95f + (((float) GameUtils.sin(super.game.getTick() * 3)) / 163840f);
+			x = scaleMove + (((float) GameUtils.sin(super.game.getTick() * 3)) / 163840f);
 		}
 		painter.scale(x, x);
 		this.levelSelect.Paint(painter, 0f, 0f, 0);
@@ -140,7 +143,8 @@ public class StateMainLevelSelect extends GameState
 		}
 		painter.restore();
 		painter.save();
-		num15 = w / 2;
+//		num15 = w / 2;
+		num15 = num11 + num6 + (num4 / 2);
 		flag2 = GameUtils.isInside(super.game.getMouseX(), super.game.getMouseY(), num15 - (num6 / 2), num16 - (num7 / 2), num6, num7);
 		flag3 = (!flag && flag2) && super.game.isMouseDown();
 		flag4 = (!flag && flag2) && super.game.isMouseUp();
@@ -149,27 +153,31 @@ public class StateMainLevelSelect extends GameState
 		pos = !flag8 ? 0 : (((this.animticks - 60) << 10) / 80);
 		if (flag7)
 		{
-			x = 0.8f;
+//			x = 0.8f;
+			x = scaleNormal;
 			painter.setOpacity(0.7f);
 		}
 		else if (flag4 || flag3)
 		{
-			x = 0.8f;
+//			x = 0.8f;
+			x = scaleNormal;
 		}
 		else
 		{
-			x = 0.95f + (((float) GameUtils.sin((super.game.getTick() * 3) + 0x41)) / 163840f);
+			x = scaleMove + (((float) GameUtils.sin((super.game.getTick() * 3) + 0x41)) / 163840f);
 			if (flag8)
 			{
 				if (pos < 0x300)
 				{
-					x = 0.8f;
+//					x = 0.8f;
+					x = scaleNormal;
 					painter.setOpacity(0.7f);
 				}
 				else
 				{
-					float num20 = x - 0.8f;
-					x = 0.8f + ((num20 * (pos - 0x300)) / 256f);
+//					float num20 = x - 0.8f;
+					float num20 = x = scaleNormal;
+					x = scaleNormal + ((num20 * (pos - 0x300)) / 256f);
 					painter.setOpacity(0.7f + (((pos - 0x300) * 0.3f) / 256f));
 				}
 			}
@@ -244,7 +252,8 @@ public class StateMainLevelSelect extends GameState
 		}
 		painter.restore();
 		painter.save();
-		num15 = (w - num11) - (num4 / 2);
+//		num15 = (w - num11) - (num4 / 2);
+		num15 = num11*3 + num6+ num6 + (num6 / 2);
 		flag7 = super.game.getSettings().m_levels.get(0x13) < 1;
 		flag8 = (this.animticks != -1) && (this.animationLevel == 0x13);
 		flag2 = GameUtils.isInside(super.game.getMouseX(), super.game.getMouseY(), num15 - (num6 / 2), num16 - (num7 / 2), num6, num7);
@@ -253,27 +262,30 @@ public class StateMainLevelSelect extends GameState
 		pos = !flag8 ? 0 : (((this.animticks - 60) << 10) / 80);
 		if (flag7)
 		{
-			x = 0.8f;
+//			x = 0.8f;
+			x = scaleNormal;
 			painter.setOpacity(0.7f);
 		}
 		else if (flag4 || flag3)
 		{
-			x = 0.8f;
+//			x = 0.8f;
+			x = scaleNormal;
 		}
 		else
 		{
-			x = 0.95f + (((float) GameUtils.sin((super.game.getTick() * 3) + 130)) / 163840f);
+			x = scaleMove + (((float) GameUtils.sin((super.game.getTick() * 3) + 130)) / 163840f);
 			if (flag8)
 			{
 				if (pos < 0x300)
 				{
-					x = 0.8f;
+//					x = 0.8f;
+					x = scaleNormal;
 					painter.setOpacity(0.7f);
 				}
 				else
 				{
-					float num28 = x - 0.8f;
-					x = 0.8f + ((num28 * (pos - 0x300)) / 256f);
+					float num28 = x - scaleNormal;
+					x = scaleNormal + ((num28 * (pos - 0x300)) / 256f);
 					painter.setOpacity(0.7f + (((pos - 0x300) * 0.3f) / 256f));
 				}
 			}
