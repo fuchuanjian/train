@@ -142,6 +142,7 @@ public class StateMainLevelSelect extends GameState
 			this.paintMedal(painter, num18, y, animMedal, pos, 0);
 		}
 		painter.restore();
+		
 		painter.save();
 //		num15 = w / 2;
 		num15 = num11 + num6 + (num4 / 2);
@@ -357,6 +358,163 @@ public class StateMainLevelSelect extends GameState
 			this.paintMedal(painter, num18, y, animMedal, pos, 2);
 		}
 		painter.restore();
+		
+		// 第4个
+		num15 = num11*4 + num6*3 + (num6 / 2);
+		painter.save();
+		painter.translate((float) num15, (float) num16);
+		flag2 = GameUtils.isInside(super.game.getMouseX(), super.game.getMouseY(), num15 - (num6 / 2), num16 - (num7 / 2), num6, num7);
+		flag3 = (!flag && flag2) && super.game.isMouseDown();
+		flag4 = (!flag && flag2) && super.game.isMouseUp();
+		if (flag4 || flag3)
+		{
+			x = scaleNormal;
+		}
+		else
+		{
+			x = scaleMove + (((float) GameUtils.sin(super.game.getTick() * 3 + 195)) / 163840f);
+		}
+		painter.scale(x, x);
+		this.levelSelect.Paint(painter, 0f, 0f, 0);
+		if (flag4)
+		{
+			super.game.clearMouseStatus();
+			super.game.setValue(EValues.EValueSelectedMainLevel, 0);
+			super.game.changeState(EStates.EGameStateLevelSelect);
+			super.game.doButtonPressSound();
+		}
+		this.levelsribbon.Paint(painter, 0f, (float) ribbonY, 0, 0f);
+		if (this.trial)
+		{
+			this.trialFree.Paint(painter, 0f, (float) ribbonY, 0);
+		}
+		else
+		{
+			this.paintNumbers(painter, 0, -(this.levelsribbon.getWidth() / 2), ribbonY, this.levelsribbon.getWidth(), this.levelsribbon.getHeight());
+		}
+		flag5 = super.game.getSettings().m_levels.get(14) > 0;
+		animMedal = (this.animticks != -1) && (this.animationLevel == 14);
+		pos = !animMedal ? 0 : (((this.animticks - 60) << 10) / 80);
+		num18 = 0;
+		y = num12;
+		if (flag5)
+		{
+			this.paintMedal(painter, num18, y, animMedal, pos, 0);
+		}
+		painter.restore();
+		
+		painter.save();
+//		num15 = w / 2;
+		num15 = num11 + num6 + (num4 / 2);
+		flag2 = GameUtils.isInside(super.game.getMouseX(), super.game.getMouseY(), num15 - (num6 / 2), num16 - (num7 / 2), num6, num7);
+		flag3 = (!flag && flag2) && super.game.isMouseDown();
+		flag4 = (!flag && flag2) && super.game.isMouseUp();
+		flag7 = super.game.getSettings().m_levels.get(4) < 1;
+		flag8 = (this.animticks != -1) && (this.animationLevel == 4);
+		pos = !flag8 ? 0 : (((this.animticks - 60) << 10) / 80);
+		if (flag7)
+		{
+//			x = 0.8f;
+			x = scaleNormal;
+			painter.setOpacity(0.7f);
+		}
+		else if (flag4 || flag3)
+		{
+//			x = 0.8f;
+			x = scaleNormal;
+		}
+		else
+		{
+			x = scaleMove + (((float) GameUtils.sin((super.game.getTick() * 3) + 0x41)) / 163840f);
+			if (flag8)
+			{
+				if (pos < 0x300)
+				{
+//					x = 0.8f;
+					x = scaleNormal;
+					painter.setOpacity(0.7f);
+				}
+				else
+				{
+//					float num20 = x - 0.8f;
+					float num20 = x = scaleNormal;
+					x = scaleNormal + ((num20 * (pos - 0x300)) / 256f);
+					painter.setOpacity(0.7f + (((pos - 0x300) * 0.3f) / 256f));
+				}
+			}
+		}
+		painter.translate((float) num15, (float) num16);
+		painter.scale(x, x);
+		this.levelSelect.Paint(painter, 0f, 0f, 1);
+		painter.setOpacity(1.0f);
+		if (!flag7 && flag4)
+		{
+			super.game.clearMouseStatus();
+			if (this.trial)
+			{
+				super.game.setValue(EValues.EValueTrialClickedFrom, 0);
+				super.game.changeState(EStates.EGameStateTrial);
+			}
+			else
+			{
+				super.game.setValue(EValues.EValueSelectedMainLevel, 1);
+				super.game.changeState(EStates.EGameStateLevelSelect);
+			}
+			super.game.doButtonPressSound();
+		}
+		this.levelsribbon.Paint(painter, 0f, (float) ribbonY, 0, 0f);
+		if (flag7 || flag8)
+		{
+			GameUtils.initRandom(((this.animticks + 0x200) * 0xabe63) ^ 0x3eba348);
+			int num21 = (GameUtils.sin((pos * 180) / 0x400) * 0x20) >> 13;
+			float num22 = num21;
+			num21 /= 4;
+			int num23 = ((pos <= 0) || (num21 < 1)) ? 0 : (((GameUtils.getRandom() >> 3) % num21) - (num21 / 2));
+			int num24 = ((pos <= 0) || (num21 < 1)) ? 0 : (((GameUtils.getRandom() >> 3) % num21) - (num21 / 2));
+			float num25 = (pos <= 0) ? 0f : (((GameUtils.sin(pos / 3) * num22) / 8192f) - (num22 / 2f));
+			int num26 = (h - num13) + this.medalslock.getHeight();
+			int num27 = (pos < 0x300) ? 0 : (((0x2000 - GameUtils.sin((((pos - 0x300) * 90) / 0x100) + 90)) * num26) >> 13);
+			if (pos > 0x300)
+			{
+				this.paintStars(painter, 0, num13 + (this.medalslock.getHeight() / 10), (pos - 0x300) << 2);
+			}
+			this.medalslock.Paint(painter, (float) num23, (float)((num13 + num24) + num27), 0, num25 - (((float) num27) / 3f));
+			if (pos > 0x200)
+			{
+				painter.setOpacity(((float)(0x400 - pos)) / 512f);
+			}
+			if (!this.trial)
+			{
+				this.lockedwhite.Paint(painter, 0f, (float)(ribbonY + 6), 0);
+			}
+		}
+		if (!flag7 && !this.trial)
+		{
+			if (flag8)
+			{
+				painter.setOpacity((pos < 0x200) ? 0.0f : (((float)(pos - 0x200)) / 512f));
+			}
+			this.paintNumbers(painter, 1, -(this.levelsribbon.getWidth() / 2), ribbonY, this.levelsribbon.getWidth(), this.levelsribbon.getHeight());
+			painter.setOpacity(1.0f);
+		}
+		if (this.trial)
+		{
+			painter.setOpacity(1.0f);
+			this.trialFull.Paint(painter, 0f, (float) ribbonY, 0);
+		}
+		flag5 = super.game.getSettings().m_levels.get(0x1d) > 0;
+		animMedal = (this.animticks != -1) && (this.animationLevel == 0x1d);
+		pos = !animMedal ? 0 : (((this.animticks - 60) << 10) / 80);
+		num18 = 0;
+		y = num12;
+		if (flag5)
+		{
+			this.paintMedal(painter, num18, y, animMedal, pos, 1);
+		}
+		painter.restore();
+		
+		
+		//返回键按钮
 		if (this.levelSelectBack.paint(painter, super.game, this.levelSelectBack.getW() / 12, h - ((this.levelSelectBack.getH() * 13) / 12)))
 		{
 			super.game.doButtonPressSound();
