@@ -11,6 +11,7 @@ public class StateLevelSelect extends GameState
 	private int levelOffset;
 	private Sprite levelSelectButton;
 	private Button levelSelectButtonBack;
+	private Button levelSelectButtongo;
 	private Sprite levelSelectButtonDefault;
 	private java.util.ArrayList<Button> levelSelectLevels = new java.util.ArrayList<Button>();
 	private Sprite levelSelectLock;
@@ -28,6 +29,7 @@ public class StateLevelSelect extends GameState
 		this.levelSelectButtonDefault = new Sprite("leveldefault1002", 2, 1, 9, true);
 		this.levelSelectLock = new Sprite("lock10", 1, 1, 9, true);
 		this.levelSelectButtonBack = new Button(EButtonTypes.ENormal, "btnback", 9, 0);
+		this.levelSelectButtongo = new Button(EButtonTypes.ENormal, "btngo", 9, 0);
 		this.numberSprite = new Sprite("numbers3", 10, 1, 9, true);
 		this.menubg = new Sprite("menubg", 1, 1, 9, true);
 		this.trialFullBig = new Sprite("trial-fullbig", 1, 1, 0x12, true);
@@ -157,16 +159,29 @@ public class StateLevelSelect extends GameState
 		//返回键
 		if (this.levelSelectButtonBack.paint(painter, super.game, this.levelSelectButtonBack.getW() / 12, h - ((this.levelSelectButtonBack.getH() * 13) / 12)))
 		{
-			super.game.changeState(EStates.EGameStateMainLevelSelect);
-			super.game.clearMouseStatus();
+			if (offsetPage <= 0)
+			{				
+				super.game.changeState(EStates.EGameStateMainLevelSelect);
+				super.game.clearMouseStatus();
+			}else
+			{
+				offsetPage -- ;
+				this.levelOffset = (this.mainLevelSelect +  offsetPage ) * 15 ;
+				refreshButtons();
+			}
 			super.game.doButtonPressSound();
 		}
 		
 		//下一页键
-		if (mainLevelSelect == 3 &&  this.levelSelectButtonBack.paint(painter, super.game, this.levelSelectButtonBack.getW() / 12, h - ((this.levelSelectButtonBack.getH() * 13) / 12) - ((this.levelSelectButtonBack.getH() * 14) / 12) ))
+		if (mainLevelSelect == 3 &&  this.levelSelectButtongo.paint(painter, super.game, this.levelSelectButtonBack.getW() / 12, h - ((this.levelSelectButtonBack.getH() * 13) / 12) - ((this.levelSelectButtonBack.getH() * 14) / 12) ))
 		{
-			this.levelOffset = (this.mainLevelSelect +  (++ offsetPage)%5 ) * 15 ;
-			refreshButtons();
+			if (offsetPage < 4)
+			{				
+				offsetPage ++ ;
+				if (offsetPage >= 4 ) offsetPage = 4;
+				this.levelOffset = (this.mainLevelSelect +  offsetPage ) * 15 ;
+				refreshButtons();
+			}
 			super.game.doButtonPressSound();
 		}
 		
@@ -185,28 +200,15 @@ public class StateLevelSelect extends GameState
 	private void refreshButtons()
 	{
 		this.levelSelectLevels.clear();
-		boolean flag = this.levelOffset < 46 ?  true : false;
 		for (int i = 0; i < 15; i++)
 		{
+			int level = i + this.levelOffset;
 			Button button;
-			if ((super.game.getSettings().m_levels.get(i + this.levelOffset) > 0) && flag)
+			if (super.game.getSettings().m_levels.get(level) > 0 
+				|| level == 0 || level== 15 || level ==30 || level== 45  )
 			{
 				button = new Button(EButtonTypes.ENormal, this.levelSelectButton, 9, 5, false);
-			}
-			else if (flag )
-			{
-				flag = false;
-				if (this.trial && (i == 5))
-				{
-					button = new Button(EButtonTypes.ENormal, this.levelSelectButton, 9, 5, true);
-					button.m_flags = 1;
-				}
-				else
-				{
-					button = new Button(EButtonTypes.ENormal, this.levelSelectButtonDefault, 9, 5, false);
-				}
-			}
-			else
+			}else
 			{
 				button = new Button(EButtonTypes.ENormal, this.levelSelectButton, 9, 5, true);
 				button.m_flags = 1;
