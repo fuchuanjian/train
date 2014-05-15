@@ -1,5 +1,7 @@
 ﻿package com.chuanonly.notes;
 
+import android.R.integer;
+
 
 public class StateLevelSelect extends GameState
 {
@@ -18,7 +20,7 @@ public class StateLevelSelect extends GameState
 	private Sprite numberSprite;
 	private boolean trial;
 	private Sprite trialFullBig;
-
+	private int offsetPage = 0;
 	public StateLevelSelect(GameCore parent)
 	{
 		super.initState(parent);
@@ -38,8 +40,9 @@ public class StateLevelSelect extends GameState
 		this.fadeOutTicks = -1;
 		this.mainLevelSelect = super.game.getValue(EValues.EValueSelectedMainLevel);
 		this.levelOffset = this.mainLevelSelect * 15;
+		offsetPage = 0;
 		this.refreshButtons();
-		if (this.mainLevelSelect == 0)
+		if (this.mainLevelSelect == 0 || this.mainLevelSelect == 3)
 		{
 			this.levelselectpanel = new Sprite("levelselectpanel1", 1, 1, 9, false);
 		}
@@ -118,10 +121,17 @@ public class StateLevelSelect extends GameState
 				int num13 = (num6 + (num9 * num4)) + ((this.levelSelectLevels.get(j).getH() / 2) - (this.numberSprite.getHeight() / 2));
 				this.numberSprite.Paint(painter, (float) num12, (float) num13, (1 + j) + this.levelOffset);
 			}
-			else
+			else if (((j + 1) + this.levelOffset) < 100)
 			{
 				int num14 = (num7 + (num8 * num5)) + ((this.levelSelectLevels.get(j).getW() / 2) - this.numberSprite.getWidth());
 				int num15 = (num6 + (num9 * num4)) + ((this.levelSelectLevels.get(j).getH() / 2) - (this.numberSprite.getHeight() / 2));
+				this.numberSprite.Paint(painter, (float) num14, (float) num15, ((1 + j) + this.levelOffset) / 10);
+				this.numberSprite.Paint(painter, (float)(num14 + this.numberSprite.getWidth()), (float) num15, ((1 + j) + this.levelOffset) % 10);
+			}else if (((j + 1) + this.levelOffset) < 1000)
+			{
+				int num14 = (num7 + (num8 * num5)) + ((this.levelSelectLevels.get(j).getW() / 2) - this.numberSprite.getWidth());
+				int num15 = (num6 + (num9 * num4)) + ((this.levelSelectLevels.get(j).getH() / 2) - (this.numberSprite.getHeight() / 2));
+				this.numberSprite.Paint(painter, (float)(num14 - this.numberSprite.getWidth()), (float) num15, ((1 + j) + this.levelOffset) / 100);
 				this.numberSprite.Paint(painter, (float) num14, (float) num15, ((1 + j) + this.levelOffset) / 10);
 				this.numberSprite.Paint(painter, (float)(num14 + this.numberSprite.getWidth()), (float) num15, ((1 + j) + this.levelOffset) % 10);
 			}
@@ -143,12 +153,23 @@ public class StateLevelSelect extends GameState
 			}
 		}
 		this.levelselectpanel.Paint(painter, 0f, 0f, 0);
+		
+		//返回键
 		if (this.levelSelectButtonBack.paint(painter, super.game, this.levelSelectButtonBack.getW() / 12, h - ((this.levelSelectButtonBack.getH() * 13) / 12)))
 		{
 			super.game.changeState(EStates.EGameStateMainLevelSelect);
 			super.game.clearMouseStatus();
 			super.game.doButtonPressSound();
 		}
+		
+		//下一页键
+		if (mainLevelSelect == 3 &&  this.levelSelectButtonBack.paint(painter, super.game, this.levelSelectButtonBack.getW() / 12, h - ((this.levelSelectButtonBack.getH() * 13) / 12) - ((this.levelSelectButtonBack.getH() * 14) / 12) ))
+		{
+			this.levelOffset = (this.mainLevelSelect +  (++ offsetPage)%5 ) * 15 ;
+			refreshButtons();
+			super.game.doButtonPressSound();
+		}
+		
 		if (this.fadeOutTicks != -1)
 		{
 			this.fadeOutTicks++;
@@ -164,7 +185,7 @@ public class StateLevelSelect extends GameState
 	private void refreshButtons()
 	{
 		this.levelSelectLevels.clear();
-		boolean flag = true;
+		boolean flag = this.levelOffset < 46 ?  true : false;
 		for (int i = 0; i < 15; i++)
 		{
 			Button button;
@@ -172,7 +193,7 @@ public class StateLevelSelect extends GameState
 			{
 				button = new Button(EButtonTypes.ENormal, this.levelSelectButton, 9, 5, false);
 			}
-			else if (flag)
+			else if (flag )
 			{
 				flag = false;
 				if (this.trial && (i == 5))

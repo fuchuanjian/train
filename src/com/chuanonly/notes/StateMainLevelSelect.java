@@ -379,7 +379,7 @@ public class StateMainLevelSelect extends GameState
 		if (flag4)
 		{
 			super.game.clearMouseStatus();
-			super.game.setValue(EValues.EValueSelectedMainLevel, 0);
+			super.game.setValue(EValues.EValueSelectedMainLevel, 3);
 			super.game.changeState(EStates.EGameStateLevelSelect);
 			super.game.doButtonPressSound();
 		}
@@ -390,7 +390,7 @@ public class StateMainLevelSelect extends GameState
 		}
 		else
 		{
-			this.paintNumbers(painter, 0, -(this.levelsribbon.getWidth() / 2), ribbonY, this.levelsribbon.getWidth(), this.levelsribbon.getHeight());
+			this.paintNumbers4(painter, -(this.levelsribbon.getWidth() / 2), ribbonY, this.levelsribbon.getWidth(), this.levelsribbon.getHeight());
 		}
 		flag5 = super.game.getSettings().m_levels.get(14) > 0;
 		animMedal = (this.animticks != -1) && (this.animationLevel == 14);
@@ -494,7 +494,7 @@ public class StateMainLevelSelect extends GameState
 			{
 				painter.setOpacity((pos < 0x200) ? 0.0f : (((float)(pos - 0x200)) / 512f));
 			}
-			this.paintNumbers(painter, 1, -(this.levelsribbon.getWidth() / 2), ribbonY, this.levelsribbon.getWidth(), this.levelsribbon.getHeight());
+			this.paintNumbers4(painter , -(this.levelsribbon.getWidth() / 2), ribbonY, this.levelsribbon.getWidth(), this.levelsribbon.getHeight());
 			painter.setOpacity(1.0f);
 		}
 		if (this.trial)
@@ -587,7 +587,6 @@ public class StateMainLevelSelect extends GameState
 			}
 		}
 	}
-
 	public final void paintNumbers(Painter painter, int mainLevel, int ribbonX, int ribbonY, int ribbonWidth, int ribbonHeight)
 	{
 		int num = mainLevel * 15;
@@ -618,6 +617,39 @@ public class StateMainLevelSelect extends GameState
 		this.numberSprite.Paint(painter, (float) num5, (float) num4, 10);
 		num5 += this.numberSprite.getWidth();
 		this.numberSprite.Paint(painter, (float) num5, (float) num4, 1);
+		num5 += this.numberSprite.getWidth();
+		this.numberSprite.Paint(painter, (float) num5, (float) num4, 5);
+	}
+	public final void paintNumbers4(Painter painter, int ribbonX, int ribbonY, int ribbonWidth, int ribbonHeight)
+	{
+		int num = 45;
+		int frame = 0;
+		for (int i = 0; i < 75; i++)
+		{
+			if (super.game.getSettings().m_levels.get(i + num) > 0)
+			{
+				frame++;
+			}
+		}
+		int num4 = (ribbonY + ((ribbonHeight - this.numberSprite.getHeight()) / 2)) - 0x11;
+		int num5 = 0;
+		if (frame < 10)
+		{
+			num5 = ribbonX + ((ribbonWidth - (4 * this.numberSprite.getWidth())) / 2);
+			this.numberSprite.Paint(painter, (float) num5, (float) num4, frame);
+			num5 += this.numberSprite.getWidth();
+		}
+		else
+		{
+			num5 = ribbonX + ((ribbonWidth - (5 * this.numberSprite.getWidth())) / 2);
+			this.numberSprite.Paint(painter, (float) num5, (float) num4, frame / 10);
+			num5 += this.numberSprite.getWidth();
+			this.numberSprite.Paint(painter, (float) num5, (float) num4, frame % 10);
+			num5 += this.numberSprite.getWidth();
+		}
+		this.numberSprite.Paint(painter, (float) num5, (float) num4, 10);
+		num5 += this.numberSprite.getWidth();
+		this.numberSprite.Paint(painter, (float) num5, (float) num4, 7);
 		num5 += this.numberSprite.getWidth();
 		this.numberSprite.Paint(painter, (float) num5, (float) num4, 5);
 	}

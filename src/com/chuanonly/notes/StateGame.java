@@ -681,7 +681,7 @@ public class StateGame extends GameState {
 
 				this.ambience = -1;
 			}
-			if (this.levelSet == 0) {
+			if (this.levelSet == 0 || this.levelSet == 3) {
 				this.trees = new Sprite("trees", 3, 1, 0x22, false);
 				this.bush = new Sprite("bush", 3, 1, 0x22, false);
 				this.animal = new Sprite("animal", 3, 1, 0x12, false);
@@ -1513,7 +1513,7 @@ public class StateGame extends GameState {
 						if ((type >= 0) && (type <= 2)) {
 							num50 += this.tileh / 2;
 							float angle = 0f;
-							if ((this.levelSet == 0) || (this.levelSet == 2)) {
+							if ((this.levelSet == 0) || (this.levelSet == 2) ||(this.levelSet == 3)) {
 								angle = ((float) (GameUtils
 										.sin(((this.gametick * 4) + (x * 10))
 												+ (num50 * 5)) * 4)) / 8092f;
@@ -1528,7 +1528,7 @@ public class StateGame extends GameState {
 									type, angle);
 						} else if ((type >= 3) && (type <= 5)) {
 							num50 += this.bush.getHeight() / 2;
-							if ((this.levelSet == 0)
+							if ((this.levelSet == 0) || this.levelSet == 3
 									|| ((this.levelSet == 2) && (type == 5))) {
 								if ((this.levelSet == 2) && (type == 5)) {
 									num50 -= this.bush.getHeight() / 4;

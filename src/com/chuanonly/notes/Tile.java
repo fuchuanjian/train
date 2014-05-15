@@ -79,7 +79,7 @@ public class Tile {
 			currentTileset = tileset;
 			clearTiles();
 			bridgeOffs = 0;
-			if (currentTileset == 0) {
+			if (currentTileset == 0 || currentTileset == 3) {
 				tiles = new Sprite("tiles", 11, 1, 0x12, false);
 			} else if (currentTileset == 1) {
 				tiles = new Sprite("tiles2", 11, 1, 0x12, false);
