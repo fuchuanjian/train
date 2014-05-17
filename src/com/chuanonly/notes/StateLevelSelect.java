@@ -6,6 +6,7 @@ import android.R.integer;
 public class StateLevelSelect extends GameState
 {
 
+	private final String LASTPAGER = "lastPage_";
 	private int fadeOutTicks;
 
 	private int mLevelOffset;
@@ -56,7 +57,8 @@ public class StateLevelSelect extends GameState
 			this.levelOffset = 60;
 		}
 		mLevelOffset = levelOffset;
-		offsetPage = 0;
+		offsetPage = Util.getIntFromSharedPref(LASTPAGER+mainLevelSelect, 0);
+		mLevelOffset = levelOffset+  offsetPage * 15 ;
 		this.refreshButtons();
 		if (this.mainLevelSelect == 0 || this.mainLevelSelect == 3)
 		{
@@ -179,6 +181,7 @@ public class StateLevelSelect extends GameState
 			}else
 			{
 				offsetPage -- ;
+				Util.setIntToSharedPref(LASTPAGER+mainLevelSelect, offsetPage);
 				this.mLevelOffset = levelOffset+  offsetPage * 15 ;
 				refreshButtons();
 			}
@@ -192,6 +195,7 @@ public class StateLevelSelect extends GameState
 			{				
 				offsetPage ++ ;
 				if (offsetPage >= 3 ) offsetPage = 3;
+				Util.setIntToSharedPref(LASTPAGER+mainLevelSelect, offsetPage);
 				this.mLevelOffset = levelOffset+  offsetPage * 15 ;
 				refreshButtons();
 			}
@@ -204,6 +208,7 @@ public class StateLevelSelect extends GameState
 			{				
 				offsetPage ++ ;
 				if (offsetPage >= 1 ) offsetPage = 1;
+				Util.setIntToSharedPref(LASTPAGER+mainLevelSelect, offsetPage);
 				this.mLevelOffset = levelOffset + offsetPage * 15 ;
 				refreshButtons();
 			}
