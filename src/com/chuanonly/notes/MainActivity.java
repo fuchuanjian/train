@@ -18,17 +18,19 @@ import com.google.ads.AdRequest;
 import com.google.ads.AdSize;
 import com.google.ads.AdView;
 import com.google.ads.AdRequest.ErrorCode;
+import com.google.ads.InterstitialAd;
 
 
 public class MainActivity extends LGame {
 	private AdView mAdView;
+	private InterstitialAd mInterstitialAdView;
 	private static WeakReference<Handler> mHandlerRef;
 	private SoundPlayHelper mSoundPlay;
 	
 	public static final int MSG_SHOW_AD = 0;
 	public static final int MSG_HIDE_AD = 1;
+	public static final int MSG_SHOW_FULLSCREEN_AD = 100;
 	public static final int MSG_SOUND = 2;
-	
 	
 	public static final int MUSIC_START = 3;
 	public static final int MUSIC_STOP = 4;
@@ -95,6 +97,9 @@ public class MainActivity extends LGame {
 			}else if (msg.what == MSG_HIDE_AD)
 			{
 				_bottomLayout.setVisibility(View.GONE);
+			}else if (msg.what == MSG_SHOW_FULLSCREEN_AD)
+			{
+				showFullAd();
 			}else if (msg.what == MSG_SOUND)
 			{
 				int soundId = msg.arg1;
@@ -119,10 +124,22 @@ public class MainActivity extends LGame {
 			Handler h =  mHandlerRef.get();
 			if (h != null)
 			{
-				h.sendEmptyMessage(0);
+				h.sendEmptyMessage(MSG_SHOW_AD);
 			}
 		}
 	}
+	public static void showFullScreenAd()
+	{
+		if (Util.isNetworkAvailable(APP.getContext()))
+		{			
+			Handler h =  mHandlerRef.get();
+			if (h != null)
+			{
+				h.sendEmptyMessage(MSG_SHOW_FULLSCREEN_AD);
+			}
+		}
+	}
+	
 	public static void hideAd()
 	{
 		if (Util.isNetworkAvailable(APP.getContext()))
@@ -133,6 +150,51 @@ public class MainActivity extends LGame {
 				h.sendEmptyMessage(1);
 			}
 		}
+	}
+	private boolean hasLoad = false;
+	private void showFullAd()
+	{
+		try {
+			if (mInterstitialAdView == null)
+			{
+				mInterstitialAdView = new InterstitialAd(this, "a1530385879fa18");
+			}
+			if (hasLoad == false)
+			{
+				mInterstitialAdView.loadAd(new AdRequest());
+				hasLoad = true;
+				mInterstitialAdView.setAdListener(new AdListener() {
+					@Override
+					public void onReceiveAd(Ad arg0) {
+						mInterstitialAdView.show();
+					}
+					
+					@Override
+					public void onPresentScreen(Ad arg0) {
+						// TODO Auto-generated method stub
+					}
+					
+					@Override
+					public void onLeaveApplication(Ad arg0) {
+						// TODO Auto-generated method stub
+					}
+					
+					@Override
+					public void onFailedToReceiveAd(Ad arg0, ErrorCode arg1) {
+						// TODO Auto-generated method stub
+					}
+					
+					@Override
+					public void onDismissScreen(Ad arg0) {
+						// TODO Auto-generated method stub
+					}
+				});
+			}else {
+				mInterstitialAdView.show();
+			}
+		} catch (Exception e) {
+		}
+		
 	}
 	private void loadAd()
 	{

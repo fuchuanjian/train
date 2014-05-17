@@ -496,6 +496,10 @@ public class StateGame extends GameState {
 			super.game.getSettings().Save();
 			super.game.getSettings().saveSuccessLevel(curLevel-1);
 			MainActivity.playSound(MainActivity.SOUND_SUCEESS);
+			if (curLevel >= 61)
+			{				
+				MainActivity.showFullScreenAd();
+			}
 			if (((super.game.getSettings().m_levels.get(14) > 0) && (super.game
 					.getSettings().m_levels.get(0x1d) > 0))
 					&& (super.game.getSettings().m_levels.get(0x2c) > 0)) {

@@ -1,6 +1,7 @@
 ﻿package com.chuanonly.notes;
 
 import android.R.integer;
+import android.util.Log;
 
 
 public class StateLevelSelect extends GameState
@@ -235,8 +236,8 @@ public class StateLevelSelect extends GameState
 			int level = i + this.mLevelOffset;
 			if (level >= 83 ) break;
 			Button button;
-			if (super.game.getSettings().m_levels.get(level) > 0 
-				|| level == 0 || level== 15 || level ==30 || level== 60  )
+			if (level == 0 || level== 15 || level ==30 || level== 60  ||
+				super.game.getSettings().m_levels.get(level-1) > 0 )
 			{
 				button = new Button(EButtonTypes.ENormal, this.levelSelectButton, 9, 5, false);
 			}else
