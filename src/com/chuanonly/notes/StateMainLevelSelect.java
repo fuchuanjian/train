@@ -341,7 +341,7 @@ public class StateMainLevelSelect extends GameState
 			{
 				painter.setOpacity((pos < 0x200) ? 0f : (((float)(pos - 0x200)) / 512f));
 			}
-			this.paintNumbers(painter, 2, -(this.levelsribbon.getWidth() / 2), ribbonY, this.levelsribbon.getWidth(), this.levelsribbon.getHeight());
+			this.paintNumbers3(painter, -(this.levelsribbon.getWidth() / 2), ribbonY, this.levelsribbon.getWidth(), this.levelsribbon.getHeight());
 			painter.setOpacity(1.0f);
 		}
 		if (this.trial)
@@ -510,11 +510,11 @@ public class StateMainLevelSelect extends GameState
 		num5 += this.numberSprite.getWidth();
 		this.numberSprite.Paint(painter, (float) num5, (float) num4, 5);
 	}
-	public final void paintNumbers4(Painter painter, int ribbonX, int ribbonY, int ribbonWidth, int ribbonHeight)
+	public final void paintNumbers3(Painter painter, int ribbonX, int ribbonY, int ribbonWidth, int ribbonHeight)
 	{
-		int num = 45;
+		int num = 30;
 		int frame = 0;
-		for (int i = 0; i < 75; i++)
+		for (int i = 0; i < 30; i++)
 		{
 			if (super.game.getSettings().m_levels.get(i + num) > 0)
 			{
@@ -539,9 +539,42 @@ public class StateMainLevelSelect extends GameState
 		}
 		this.numberSprite.Paint(painter, (float) num5, (float) num4, 10);
 		num5 += this.numberSprite.getWidth();
-		this.numberSprite.Paint(painter, (float) num5, (float) num4, 7);
+		this.numberSprite.Paint(painter, (float) num5, (float) num4, 3);
 		num5 += this.numberSprite.getWidth();
-		this.numberSprite.Paint(painter, (float) num5, (float) num4, 5);
+		this.numberSprite.Paint(painter, (float) num5, (float) num4, 0);
+	}
+	public final void paintNumbers4(Painter painter, int ribbonX, int ribbonY, int ribbonWidth, int ribbonHeight)
+	{
+		int num = 60;
+		int frame = 0;
+		for (int i = 0; i < 60; i++)
+		{
+			if (super.game.getSettings().m_levels.get(i + num) > 0)
+			{
+				frame++;
+			}
+		}
+		int num4 = (ribbonY + ((ribbonHeight - this.numberSprite.getHeight()) / 2)) - 0x11;
+		int num5 = 0;
+		if (frame < 10)
+		{
+			num5 = ribbonX + ((ribbonWidth - (4 * this.numberSprite.getWidth())) / 2);
+			this.numberSprite.Paint(painter, (float) num5, (float) num4, frame);
+			num5 += this.numberSprite.getWidth();
+		}
+		else
+		{
+			num5 = ribbonX + ((ribbonWidth - (5 * this.numberSprite.getWidth())) / 2);
+			this.numberSprite.Paint(painter, (float) num5, (float) num4, frame / 10);
+			num5 += this.numberSprite.getWidth();
+			this.numberSprite.Paint(painter, (float) num5, (float) num4, frame % 10);
+			num5 += this.numberSprite.getWidth();
+		}
+		this.numberSprite.Paint(painter, (float) num5, (float) num4, 10);
+		num5 += this.numberSprite.getWidth();
+		this.numberSprite.Paint(painter, (float) num5, (float) num4, 6);
+		num5 += this.numberSprite.getWidth();
+		this.numberSprite.Paint(painter, (float) num5, (float) num4, 0);
 	}
 
 	private void paintStars(Painter painter, int x, int y, int pos)

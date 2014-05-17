@@ -8,6 +8,7 @@ public class StateLevelSelect extends GameState
 
 	private int fadeOutTicks;
 
+	private int mLevelOffset;
 	private int levelOffset;
 	private Sprite levelSelectButton;
 	private Button levelSelectButtonBack;
@@ -41,7 +42,20 @@ public class StateLevelSelect extends GameState
 		this.trial = super.game.isTrial();
 		this.fadeOutTicks = -1;
 		this.mainLevelSelect = super.game.getValue(EValues.EValueSelectedMainLevel);
-		this.levelOffset = this.mainLevelSelect * 15;
+		if (mainLevelSelect == 0)
+		{
+			this.levelOffset = 0;
+		}else if (mainLevelSelect == 1)
+		{
+			this.levelOffset = 15;
+		}else if (mainLevelSelect == 2)
+		{
+			this.levelOffset = 30;
+		}else if (mainLevelSelect == 3)
+		{
+			this.levelOffset = 60;
+		}
+		mLevelOffset = levelOffset;
 		offsetPage = 0;
 		this.refreshButtons();
 		if (this.mainLevelSelect == 0 || this.mainLevelSelect == 3)
@@ -59,7 +73,6 @@ public class StateLevelSelect extends GameState
 		this.levelSelectButtonBack.disable(false);
 		super.game.startMenuMusic(false);
 	}
-
 	@Override
 	public void backButtonPressed()
 	{
@@ -103,7 +116,7 @@ public class StateLevelSelect extends GameState
 			if (this.levelSelectLevels.get(j).paint(painter, super.game, num7 + (num8 * num5), num6 + (num4 * num9)))
 			{
 				super.game.clearMouseStatus();
-				super.game.setValue(EValues.EValueSelectedLevel, (j + 1) + this.levelOffset);
+				super.game.setValue(EValues.EValueSelectedLevel, (j + 1) + this.mLevelOffset);
 				this.fadeOutTicks = 0;
 				super.game.doButtonPressSound();
 				for (int k = 0; k < this.levelSelectLevels.size(); k++)
@@ -117,25 +130,25 @@ public class StateLevelSelect extends GameState
 			{
 				this.levelSelectLock.Paint(painter, (float)((((this.levelSelectLevels.get(j).getW() / 2) + num7) + (num8 * num5)) + 8), (float)((((this.levelSelectLevels.get(j).getH() / 2) + num6) + (num4 * num9)) + 8), 0);
 			}
-			if (((j + 1) + this.levelOffset) < 10)
+			if (((j + 1) + this.mLevelOffset) < 10)
 			{
 				int num12 = (num7 + (num8 * num5)) + ((this.levelSelectLevels.get(j).getW() / 2) - (this.numberSprite.getWidth() / 2));
 				int num13 = (num6 + (num9 * num4)) + ((this.levelSelectLevels.get(j).getH() / 2) - (this.numberSprite.getHeight() / 2));
-				this.numberSprite.Paint(painter, (float) num12, (float) num13, (1 + j) + this.levelOffset);
+				this.numberSprite.Paint(painter, (float) num12, (float) num13, (1 + j) + this.mLevelOffset);
 			}
-			else if (((j + 1) + this.levelOffset) < 100)
+			else if (((j + 1) + this.mLevelOffset) < 100)
 			{
 				int num14 = (num7 + (num8 * num5)) + ((this.levelSelectLevels.get(j).getW() / 2) - this.numberSprite.getWidth());
 				int num15 = (num6 + (num9 * num4)) + ((this.levelSelectLevels.get(j).getH() / 2) - (this.numberSprite.getHeight() / 2));
-				this.numberSprite.Paint(painter, (float) num14, (float) num15, ((1 + j) + this.levelOffset) / 10);
-				this.numberSprite.Paint(painter, (float)(num14 + this.numberSprite.getWidth()), (float) num15, ((1 + j) + this.levelOffset) % 10);
-			}else if (((j + 1) + this.levelOffset) < 1000)
+				this.numberSprite.Paint(painter, (float) num14, (float) num15, ((1 + j) + this.mLevelOffset) / 10);
+				this.numberSprite.Paint(painter, (float)(num14 + this.numberSprite.getWidth()), (float) num15, ((1 + j) + this.mLevelOffset) % 10);
+			}else if (((j + 1) + this.mLevelOffset) < 1000)
 			{
 				int num14 = (num7 + (num8 * num5)) + ((this.levelSelectLevels.get(j).getW() / 2) - this.numberSprite.getWidth());
 				int num15 = (num6 + (num9 * num4)) + ((this.levelSelectLevels.get(j).getH() / 2) - (this.numberSprite.getHeight() / 2));
-				this.numberSprite.Paint(painter, (float)(num14 - this.numberSprite.getWidth()), (float) num15, ((1 + j) + this.levelOffset) / 100);
-				this.numberSprite.Paint(painter, (float) num14, (float) num15, ((1 + j) + this.levelOffset) / 10);
-				this.numberSprite.Paint(painter, (float)(num14 + this.numberSprite.getWidth()), (float) num15, ((1 + j) + this.levelOffset) % 10);
+				this.numberSprite.Paint(painter, (float)(num14 - this.numberSprite.getWidth()), (float) num15, ((1 + j) + this.mLevelOffset) / 100);
+				this.numberSprite.Paint(painter, (float) num14, (float) num15, ((1 + j) + this.mLevelOffset) / 10);
+				this.numberSprite.Paint(painter, (float)(num14 + this.numberSprite.getWidth()), (float) num15, ((1 + j) + this.mLevelOffset) % 10);
 			}
 		}
 		if (this.trial)
@@ -166,7 +179,7 @@ public class StateLevelSelect extends GameState
 			}else
 			{
 				offsetPage -- ;
-				this.levelOffset = (this.mainLevelSelect +  offsetPage ) * 15 ;
+				this.mLevelOffset = levelOffset+  offsetPage * 15 ;
 				refreshButtons();
 			}
 			super.game.doButtonPressSound();
@@ -175,11 +188,23 @@ public class StateLevelSelect extends GameState
 		//下一页键
 		if (mainLevelSelect == 3 &&  this.levelSelectButtongo.paint(painter, super.game, this.levelSelectButtonBack.getW() / 12, h - ((this.levelSelectButtonBack.getH() * 13) / 12) - ((this.levelSelectButtonBack.getH() * 14) / 12) ))
 		{
-			if (offsetPage < 4)
+			if (offsetPage < 3)
 			{				
 				offsetPage ++ ;
-				if (offsetPage >= 4 ) offsetPage = 4;
-				this.levelOffset = (this.mainLevelSelect +  offsetPage ) * 15 ;
+				if (offsetPage >= 3 ) offsetPage = 3;
+				this.mLevelOffset = levelOffset+  offsetPage * 15 ;
+				refreshButtons();
+			}
+			super.game.doButtonPressSound();
+		}
+		//下一页键
+		if (mainLevelSelect == 2 &&  this.levelSelectButtongo.paint(painter, super.game, this.levelSelectButtonBack.getW() / 12, h - ((this.levelSelectButtonBack.getH() * 13) / 12) - ((this.levelSelectButtonBack.getH() * 14) / 12) ))
+		{
+			if (offsetPage < 2)
+			{				
+				offsetPage ++ ;
+				if (offsetPage >= 1 ) offsetPage = 1;
+				this.mLevelOffset = levelOffset + offsetPage * 15 ;
 				refreshButtons();
 			}
 			super.game.doButtonPressSound();
@@ -202,10 +227,10 @@ public class StateLevelSelect extends GameState
 		this.levelSelectLevels.clear();
 		for (int i = 0; i < 15; i++)
 		{
-			int level = i + this.levelOffset;
+			int level = i + this.mLevelOffset;
 			Button button;
 			if (super.game.getSettings().m_levels.get(level) > 0 
-				|| level == 0 || level== 15 || level ==30 || level== 45  )
+				|| level == 0 || level== 15 || level ==30 || level== 60  )
 			{
 				button = new Button(EButtonTypes.ENormal, this.levelSelectButton, 9, 5, false);
 			}else
