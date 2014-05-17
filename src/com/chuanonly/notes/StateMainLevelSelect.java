@@ -547,7 +547,7 @@ public class StateMainLevelSelect extends GameState
 	{
 		int num = 60;
 		int frame = 0;
-		for (int i = 0; i < 60; i++)
+		for (int i = 0; i < 23; i++)
 		{
 			if (super.game.getSettings().m_levels.get(i + num) > 0)
 			{
@@ -572,9 +572,9 @@ public class StateMainLevelSelect extends GameState
 		}
 		this.numberSprite.Paint(painter, (float) num5, (float) num4, 10);
 		num5 += this.numberSprite.getWidth();
-		this.numberSprite.Paint(painter, (float) num5, (float) num4, 6);
+		this.numberSprite.Paint(painter, (float) num5, (float) num4, 2);
 		num5 += this.numberSprite.getWidth();
-		this.numberSprite.Paint(painter, (float) num5, (float) num4, 0);
+		this.numberSprite.Paint(painter, (float) num5, (float) num4, 3);
 	}
 
 	private void paintStars(Painter painter, int x, int y, int pos)

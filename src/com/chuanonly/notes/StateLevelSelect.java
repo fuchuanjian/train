@@ -194,7 +194,7 @@ public class StateLevelSelect extends GameState
 			if (offsetPage < 3)
 			{				
 				offsetPage ++ ;
-				if (offsetPage >= 3 ) offsetPage = 3;
+				if (offsetPage >= 1 ) offsetPage = 1;
 				Util.setIntToSharedPref(LASTPAGER+mainLevelSelect, offsetPage);
 				this.mLevelOffset = levelOffset+  offsetPage * 15 ;
 				refreshButtons();
@@ -233,6 +233,7 @@ public class StateLevelSelect extends GameState
 		for (int i = 0; i < 15; i++)
 		{
 			int level = i + this.mLevelOffset;
+			if (level >= 83 ) break;
 			Button button;
 			if (super.game.getSettings().m_levels.get(level) > 0 
 				|| level == 0 || level== 15 || level ==30 || level== 60  )

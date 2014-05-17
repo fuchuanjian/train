@@ -15,7 +15,6 @@ public class Settings
 		  this.m_levels = new ArrayList<Integer>();
           for (int i = 0; i < 150; i++)
           {
-        	  Util.setIntToSharedPref(LEVEL+i, 1);
         	  int levelSuccessCnt = Util.getIntFromSharedPref(LEVEL+i, -1);
               this.m_levels.add(levelSuccessCnt);
           }

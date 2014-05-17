@@ -1855,7 +1855,7 @@ public class StateGame extends GameState {
 						(float) (num115 + num112), 0);
 				if (this.btnexit.paint(painter, super.game, num114, num115)) {
 					super.game.doButtonPressSound();
-
+					MainActivity.handlerMessage(MainActivity.MUSIC_START);
 					super.game.changeState(EStates.EGameStateLevelSelect);
 					super.game.clearMouseStatus();
 					this.stopAmbience(true);
@@ -1865,6 +1865,7 @@ public class StateGame extends GameState {
 						(float) (num115 + num112), 0);
 				if (this.btnrestart.paint(painter, super.game, num114, num115)) {
 					super.game.doButtonPressSound();
+					MainActivity.handlerMessage(MainActivity.MUSIC_START);
 					this.trainVolume = 0f;
 					this.trainVolumeTarget = 0f;
 
