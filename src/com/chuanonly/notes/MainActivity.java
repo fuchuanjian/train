@@ -157,7 +157,7 @@ public class MainActivity extends LGame {
 		try {
 			if (mInterstitialAdView == null)
 			{
-				mInterstitialAdView = new InterstitialAd(this, "a1530385879fa18");
+				mInterstitialAdView = new InterstitialAd(this, "a153786583df627");
 			}
 			if (hasLoad == false)
 			{
@@ -166,7 +166,9 @@ public class MainActivity extends LGame {
 				mInterstitialAdView.setAdListener(new AdListener() {
 					@Override
 					public void onReceiveAd(Ad arg0) {
-						mInterstitialAdView.show();
+						if (arg0 == mInterstitialAdView) {
+							mInterstitialAdView.show();
+						}
 					}
 					
 					@Override
@@ -186,7 +188,6 @@ public class MainActivity extends LGame {
 					
 					@Override
 					public void onDismissScreen(Ad arg0) {
-						// TODO Auto-generated method stub
 					}
 				});
 			}else {
