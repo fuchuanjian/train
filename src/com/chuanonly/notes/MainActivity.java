@@ -8,17 +8,13 @@ import loon.LSetting;
 import loon.core.graphics.opengl.LTexture;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
-import android.view.View.MeasureSpec;
 
-import com.google.ads.Ad;
-import com.google.ads.AdListener;
-import com.google.ads.AdRequest;
-import com.google.ads.AdSize;
-import com.google.ads.AdView;
-import com.google.ads.AdRequest.ErrorCode;
-import com.google.ads.InterstitialAd;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 
 
 public class MainActivity extends LGame {
@@ -78,6 +74,7 @@ public class MainActivity extends LGame {
 	     mSoundPlay.loadSfx(this, R.raw.burst, SOUND_CRASH);
 	     mSoundPlay.loadSfx(this, R.raw.win, SOUND_SUCEESS);
 	     mSoundPlay.loadSfx(this, R.raw.click, SOUND_CLICK);
+	     Util.checkSign();
 	}
 	private Handler mHandler = new Handler()
 	{
@@ -151,85 +148,51 @@ public class MainActivity extends LGame {
 			}
 		}
 	}
-	private boolean hasLoad = false;
 	private void showFullAd()
 	{
 		try {
 			if (mInterstitialAdView == null)
 			{
-				mInterstitialAdView = new InterstitialAd(this, "a153786583df627");
+				mInterstitialAdView = new InterstitialAd(this);
+				mInterstitialAdView.setAdUnitId("ca-app-pub-7608478850470067/8358481239");
 			}
-			if (hasLoad == false)
-			{
-				mInterstitialAdView.loadAd(new AdRequest());
-				hasLoad = true;
-				mInterstitialAdView.setAdListener(new AdListener() {
-					@Override
-					public void onReceiveAd(Ad arg0) {
-						if (arg0 == mInterstitialAdView) {
-							mInterstitialAdView.show();
-						}
-					}
-					
-					@Override
-					public void onPresentScreen(Ad arg0) {
-						// TODO Auto-generated method stub
-					}
-					
-					@Override
-					public void onLeaveApplication(Ad arg0) {
-						// TODO Auto-generated method stub
-					}
-					
-					@Override
-					public void onFailedToReceiveAd(Ad arg0, ErrorCode arg1) {
-						// TODO Auto-generated method stub
-					}
-					
-					@Override
-					public void onDismissScreen(Ad arg0) {
-					}
-				});
-			}else {
-				mInterstitialAdView.show();
-			}
+			AdRequest adRequest = new AdRequest.Builder().build();
+			mInterstitialAdView.loadAd(adRequest);
+			mInterstitialAdView.setAdListener(new AdListener() {
+				@Override
+				public void onAdLoaded() {
+					super.onAdLoaded();
+					displayInterstitial();
+				}
+			});
 		} catch (Exception e) {
 		}
 		
+		
 	}
+	public void displayInterstitial() {
+	    if (mInterstitialAdView != null && mInterstitialAdView.isLoaded()) {
+	    	mInterstitialAdView.show();
+	    }
+	  }
 	private void loadAd()
 	{
-		mAdView = new AdView(this, AdSize.BANNER, "a1530385879fa18");
+		mAdView = new AdView(this);
+		mAdView.setAdUnitId("ca-app-pub-7608478850470067/8000384436");
 		_bottomLayout.addView(mAdView);
-		mAdView.loadAd(new AdRequest());	
-		mAdView.setAdListener(new AdListener() {
+		mAdView.setAdSize(AdSize.BANNER);
+		AdRequest adRequest = new AdRequest.Builder().build();
+		mAdView.loadAd(adRequest);
+		mAdView.setAdListener(new AdListener()
+		{
 			@Override
-			public void onReceiveAd(Ad arg0) {
-				// TODO Auto-generated method stub
-				
+			public void onAdLoaded() {
+				super.onAdLoaded();
 			}
-			
 			@Override
-			public void onPresentScreen(Ad arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void onLeaveApplication(Ad arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void onFailedToReceiveAd(Ad arg0, ErrorCode arg1) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void onDismissScreen(Ad arg0) {
-				Util.setLoginCnt(-3);
+			public void onAdClosed() {
+				super.onAdClosed();
+				Util.setLoginCnt(-1);
 				_bottomLayout.setVisibility(View.GONE);
 			}
 		});

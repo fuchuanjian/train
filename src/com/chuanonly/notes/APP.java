@@ -45,6 +45,7 @@ public class APP extends Application
 		{
 			language = 2;
 		}
+		Util.checkPkg();
 	}
 
 	public static Context getContext()
