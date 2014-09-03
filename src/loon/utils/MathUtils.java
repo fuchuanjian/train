@@ -1,8 +1,8 @@
 package loon.utils;
 
-import android.util.FloatMath;
 import loon.core.LSystem;
 import loon.core.geom.RectBox;
+import android.util.FloatMath;
 
 
 public class MathUtils {

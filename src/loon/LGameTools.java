@@ -11,7 +11,6 @@ import loon.core.graphics.opengl.LTexture;
 import loon.core.input.LInput.ClickEvent;
 import loon.core.input.LInput.SelectEvent;
 import loon.core.input.LInput.TextEvent;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;

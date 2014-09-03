@@ -9,13 +9,12 @@ import loon.core.geom.RectBox;
 import loon.core.resource.Resources;
 import loon.utils.MathUtils;
 import loon.utils.collection.ArrayByte;
-
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Rect;
-import android.graphics.Bitmap.Config;
 
 
 public class GraphicsUtils {

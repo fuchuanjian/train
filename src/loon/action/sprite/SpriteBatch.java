@@ -13,15 +13,15 @@ import loon.core.graphics.LColor;
 import loon.core.graphics.LFont;
 import loon.core.graphics.opengl.GL;
 import loon.core.graphics.opengl.GLAttributes;
+import loon.core.graphics.opengl.GLAttributes.Usage;
 import loon.core.graphics.opengl.GLBatch;
 import loon.core.graphics.opengl.GLEx;
 import loon.core.graphics.opengl.GLMesh;
+import loon.core.graphics.opengl.GLMesh.VertexDataType;
 import loon.core.graphics.opengl.LSTRDictionary;
 import loon.core.graphics.opengl.LTexture;
 import loon.core.graphics.opengl.LTextureRegion;
 import loon.core.graphics.opengl.TextureUtils;
-import loon.core.graphics.opengl.GLAttributes.Usage;
-import loon.core.graphics.opengl.GLMesh.VertexDataType;
 import loon.utils.MathUtils;
 
 public class SpriteBatch implements LRelease {

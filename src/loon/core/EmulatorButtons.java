@@ -4,12 +4,11 @@ import loon.action.sprite.SpriteBatch;
 import loon.core.event.Updateable;
 import loon.core.geom.RectBox;
 import loon.core.graphics.opengl.GLEx;
+import loon.core.graphics.opengl.LTexture.Format;
 import loon.core.graphics.opengl.LTexturePack;
 import loon.core.graphics.opengl.LTextureRegion;
-import loon.core.graphics.opengl.LTexture.Format;
 import loon.core.input.LTouch;
 import loon.core.input.MultitouchUtils;
-
 import android.view.MotionEvent;
 
 

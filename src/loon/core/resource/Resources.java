@@ -15,7 +15,6 @@ import java.util.Map;
 import loon.core.LSystem;
 import loon.utils.StringUtils;
 import loon.utils.collection.ArrayByte;
-
 import android.content.res.AssetManager;
 
 

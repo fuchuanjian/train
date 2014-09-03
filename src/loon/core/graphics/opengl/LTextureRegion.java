@@ -2,7 +2,6 @@ package loon.core.graphics.opengl;
 
 import loon.core.LRelease;
 import loon.core.graphics.opengl.LTexture.Format;
-
 import loon.utils.MathUtils;
 
 

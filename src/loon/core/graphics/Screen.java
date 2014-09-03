@@ -21,22 +21,21 @@ import loon.core.LSystem;
 import loon.core.event.Drawable;
 import loon.core.event.ScreenListener;
 import loon.core.event.Updateable;
-import loon.core.geom.RectBox;
 import loon.core.geom.Point.Point2i;
+import loon.core.geom.RectBox;
 import loon.core.graphics.component.LLayer;
 import loon.core.graphics.opengl.GLEx;
 import loon.core.graphics.opengl.LTexture;
 import loon.core.graphics.opengl.LTexture.Format;
 import loon.core.input.LInput;
+import loon.core.input.LInputFactory.Touch;
 import loon.core.input.LKey;
 import loon.core.input.LProcess;
 import loon.core.input.LTouch;
 import loon.core.input.LTransition;
-import loon.core.input.LInputFactory.Touch;
 import loon.core.timer.LTimer;
 import loon.core.timer.LTimerContext;
 import loon.media.SoundBox;
-
 import android.view.View;
 
 

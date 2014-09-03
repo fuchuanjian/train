@@ -4,11 +4,10 @@ import java.util.HashMap;
 
 import loon.core.LSystem;
 import loon.core.geom.Vector2f;
-
 import android.graphics.Paint;
+import android.graphics.Paint.FontMetrics;
 import android.graphics.Rect;
 import android.graphics.Typeface;
-import android.graphics.Paint.FontMetrics;
 
 
 public class LFont {

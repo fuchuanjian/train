@@ -10,8 +10,8 @@ import loon.core.geom.Vector2f;
 import loon.core.graphics.component.ClickListener;
 import loon.core.graphics.opengl.GLEx;
 import loon.core.graphics.opengl.LTexture;
-import loon.core.graphics.opengl.TextureUtils;
 import loon.core.graphics.opengl.LTexture.Format;
+import loon.core.graphics.opengl.TextureUtils;
 import loon.core.input.LInput;
 import loon.core.input.LInputFactory.Key;
 

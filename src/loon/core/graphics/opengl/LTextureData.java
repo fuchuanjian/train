@@ -2,8 +2,6 @@ package loon.core.graphics.opengl;
 
 import loon.core.LRelease;
 import loon.core.graphics.LImage;
-
-
 import android.graphics.Bitmap.Config;
 
 

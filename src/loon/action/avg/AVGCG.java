@@ -6,8 +6,8 @@ import loon.core.event.Updateable;
 import loon.core.geom.Point.Point2i;
 import loon.core.graphics.opengl.GLEx;
 import loon.core.graphics.opengl.LTexture;
-import loon.core.graphics.opengl.LTextures;
 import loon.core.graphics.opengl.LTexture.Format;
+import loon.core.graphics.opengl.LTextures;
 import loon.utils.StringUtils;
 import loon.utils.collection.ArrayMap;
 

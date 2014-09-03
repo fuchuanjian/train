@@ -21,7 +21,6 @@ import loon.core.input.LProcess;
 import loon.core.resource.Resources;
 import loon.core.timer.SystemTimer;
 import loon.utils.MathUtils;
-
 import android.os.Build;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.RelativeLayout;

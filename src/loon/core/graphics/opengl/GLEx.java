@@ -18,8 +18,6 @@ import loon.core.graphics.device.LTrans;
 import loon.jni.NativeSupport;
 import loon.utils.MathUtils;
 
-import android.util.Log;
-
 
 public final class GLEx implements LTrans {
 

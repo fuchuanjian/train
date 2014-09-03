@@ -10,11 +10,10 @@ import loon.core.graphics.device.LGraphics;
 import loon.core.graphics.device.LTrans;
 import loon.core.graphics.opengl.GLLoader;
 import loon.core.graphics.opengl.LTexture;
-import loon.core.graphics.opengl.LTextures;
 import loon.core.graphics.opengl.LTexture.Format;
+import loon.core.graphics.opengl.LTextures;
 import loon.core.resource.Resources;
 import loon.utils.StringUtils;
-
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 

@@ -9,8 +9,8 @@ import loon.core.graphics.LFont;
 import loon.core.graphics.opengl.GLEx;
 import loon.core.graphics.opengl.LSTRFont;
 import loon.core.graphics.opengl.LTexture;
-import loon.core.graphics.opengl.LTextures;
 import loon.core.graphics.opengl.LTexture.Format;
+import loon.core.graphics.opengl.LTextures;
 import loon.core.input.LInputFactory.Key;
 import loon.core.timer.LTimer;
 

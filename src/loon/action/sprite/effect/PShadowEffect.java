@@ -12,7 +12,6 @@ import loon.core.graphics.opengl.LTexture;
 import loon.core.timer.LTimer;
 import loon.jni.NativeSupport;
 import loon.utils.CollectionUtils;
-
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Color;

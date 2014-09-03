@@ -20,16 +20,14 @@ import loon.core.graphics.opengl.GL;
 import loon.core.graphics.opengl.GLEx;
 import loon.core.graphics.opengl.LSTRFont;
 import loon.core.graphics.opengl.LTexture;
-import loon.core.graphics.opengl.LTextures;
 import loon.core.graphics.opengl.LTexture.Format;
+import loon.core.graphics.opengl.LTextures;
 import loon.core.input.LProcess;
 import loon.core.timer.LTimerContext;
 import loon.core.timer.SystemTimer;
 import loon.utils.MathUtils;
-
 import android.content.Context;
 import android.opengl.GLSurfaceView.Renderer;
-import android.util.Log;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.Window;

@@ -6,9 +6,9 @@ import java.util.List;
 import loon.core.geom.RectBox;
 import loon.core.graphics.LColor;
 import loon.core.graphics.opengl.LTexture;
+import loon.core.graphics.opengl.LTexture.Format;
 import loon.core.graphics.opengl.LTextureRegion;
 import loon.core.graphics.opengl.LTextures;
-import loon.core.graphics.opengl.LTexture.Format;
 import loon.utils.MathUtils;
 
 

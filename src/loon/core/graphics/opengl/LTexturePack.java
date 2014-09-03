@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 import loon.action.sprite.SpriteRegion;
 import loon.core.LRelease;
-import loon.core.geom.RectBox;
 import loon.core.geom.Point.Point2i;
+import loon.core.geom.RectBox;
 import loon.core.geom.RectBox.Rect2i;
 import loon.core.graphics.LColor;
 import loon.core.graphics.LImage;

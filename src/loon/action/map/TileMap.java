@@ -14,8 +14,8 @@ import loon.core.geom.Vector2f;
 import loon.core.graphics.LImage;
 import loon.core.graphics.opengl.GLEx;
 import loon.core.graphics.opengl.LTexture;
-import loon.core.graphics.opengl.LTexturePack;
 import loon.core.graphics.opengl.LTexture.Format;
+import loon.core.graphics.opengl.LTexturePack;
 import loon.utils.MathUtils;
 
 

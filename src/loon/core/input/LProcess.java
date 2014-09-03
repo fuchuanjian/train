@@ -20,7 +20,6 @@ import loon.core.graphics.opengl.LTextures;
 import loon.core.graphics.opengl.ScreenUtils;
 import loon.core.timer.LTimerContext;
 import loon.utils.MathUtils;
-
 import android.view.View;
 
 

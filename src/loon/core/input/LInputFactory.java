@@ -5,8 +5,6 @@ import loon.core.LSystem;
 import loon.core.event.ActionKey;
 import loon.core.geom.Vector2f;
 import loon.utils.collection.IntArray;
-
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
